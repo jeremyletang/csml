@@ -50,5 +50,5 @@ int main() {
     // delete the stack allocated on the heap
     delete(heap_stack);
     // delete the stack allocated on the stack...
-    delete((&stacked_stack));
+    delete(&stacked_stack);
 }

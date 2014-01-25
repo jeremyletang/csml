@@ -21,18 +21,15 @@
 
 #include "csml_queue.h"
 #include "csml_stack.h"
-
+#include "csml_vector.h"
+#include "csml_string.h"
 
 #define new(complet_type_name)      _new(new_, complet_type_name)
 #define _new(arg1, arg2)            arg1##arg2()
 #define stacked(complet_type_name)  _stacked(stacked_, complet_type_name)
 #define _stacked(arg1, arg2)        arg1##arg2()
 #define delete(var)\
-if (var != 0) {\
-    if (var->free(var) == true)\
+if ((var) != 0) {\
+    if ((var)->free(var) == true)\
         free(var);\
-}
-
-//#define IS_TOTOP(X) _Generic((X), default: 0, struct toto*: 1)                                                                                                                                                                                                             
-//#define new(cstl_type, type_name) new_##cstl_type##_##type_name##_t()                                                                                                                                                                                                      
-//#define stacked(cstl_type, type_name) stack_##cstl_type##_##type_name##_t()                                                                                                                                                                                                
+}                                                                                                                                                                                              

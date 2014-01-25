@@ -140,4 +140,4 @@ unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self) {\
 
 #define Stack(type_name) stack_##type_name##_t
 
-#endif // CSTL_STACK_H
+#endif // CSML_STACK_H
