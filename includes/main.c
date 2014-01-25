@@ -22,10 +22,13 @@
 #include <stdio.h>
 #include "cstl.h"
 
+// Call the macros with the givens types to implement a stack for this type.
 impl_stack(int, int);
 
 int main() {
     Stack(int) *stack = new(Stack(int));
 
-    printf("Stack size = %d", stack->len(stack));
+    printf("Stack size: %d\n", stack->len(stack));
+    stack->push(stack, 10);
+    printf("Stack size after a push: %d\n", stack->len(stack));
 }

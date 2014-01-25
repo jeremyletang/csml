@@ -24,6 +24,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define impl_stack(type_name, T)\
 \
@@ -44,12 +45,13 @@ unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
 	stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
+	printf("create\n");\
 	if (self != 0) {\
 		self->size = 0;\
 		self->len = stack_##type_name##_t_len;\
 		self->push = stack_##type_name##_t_push;\
 	}\
-	return (void*)0;\
+	return self;\
 }\
 \
 bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
