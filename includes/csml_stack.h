@@ -34,7 +34,8 @@ struct item_stack_##type_name##_t {\
 }item_stack_##type_name##_t;\
 \
 typedef struct stack_##type_name##_t {\
-    T               (*top)(struct stack_##type_name##_t *self);\
+    T               *(*top)(struct stack_##type_name##_t *self);\
+    void            (*pop)(struct stack_##type_name##_t *self);\
     bool            (*push)(struct stack_##type_name##_t *self, T item);\
     bool            (*is_empty)(struct stack_##type_name##_t *self);\
     unsigned int    (*len)(struct stack_##type_name##_t *self);\
@@ -48,14 +49,14 @@ bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T
 unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
-T               stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
+T               *stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
+void            stack_##type_name##_t_pop(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
     stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
     printf("create\n");\
     if (self != 0) {\
-        self->size = 0;\
         stack_##type_name##_t_initialize(self, true);\
     }\
     return self;\
@@ -63,16 +64,18 @@ stack_##type_name##_t *new_stack_##type_name##_t() {\
 \
 stack_##type_name##_t stacked_stack_##type_name##_t() {\
     stack_##type_name##_t self;\
-    self.size = 0;\
     stack_##type_name##_t_initialize(&self, false);\
     return self;\
 }\
 \
 void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type) {\
+    self->size = 0;\
+    self->top_item = 0;\
     self->len = stack_##type_name##_t_len;\
     self->push = stack_##type_name##_t_push;\
     self->top = stack_##type_name##_t_top;\
     self->is_empty = stack_##type_name##_t_is_empty;\
+    self->pop = stack_##type_name##_t_pop;\
     if (type) {\
         self->free = stack_##type_name##_t_delete_heap;\
     } else {\
@@ -101,8 +104,17 @@ bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
     return return_value;\
 }\
 \
-T stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
-    return self->top_item->item;\
+T *stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
+    return &self->top_item->item;\
+}\
+\
+void stack_##type_name##_t_pop(struct stack_##type_name##_t *self) {\
+    if (self->top_item != 0) {\
+        struct item_stack_##type_name##_t *tmp = self->top_item;\
+        self->top_item = self->top_item->next;\
+        free(self->top_item);\
+        self->size -= 1;\
+    }\
 }\
 \
 bool stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self) {\

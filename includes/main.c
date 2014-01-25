@@ -33,15 +33,19 @@ int main() {
 
     // use heap stack
     printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
+    heap_stack->push(heap_stack, 21);
     heap_stack->push(heap_stack, 42);
+    heap_stack->push(heap_stack, 84);
     printf("Heap Stack size after a push: %d\n", heap_stack->len(heap_stack));
-    printf("Heap Stack top value after a push: %d\n", heap_stack->top(heap_stack));
+    heap_stack->pop(heap_stack);
+    printf("Heap Stack size after a pop: %d\n", heap_stack->len(heap_stack));
+    printf("Heap Stack top value after a push: %d\n", *heap_stack->top(heap_stack));
 
     // use stacked stack
     printf("Stacked Stack size: %d\n", stacked_stack.len(&stacked_stack));
     stacked_stack.push(&stacked_stack, 21);
     printf("Stacked Stack size after a push: %d\n", stacked_stack.len(&stacked_stack));
-    printf("Stacked Stack top value after a push: %d\n", stacked_stack.top(&stacked_stack));
+    printf("Stacked Stack top value after a push: %d\n", *stacked_stack.top(&stacked_stack));
 
     // delete the stack allocated on the heap
     delete(heap_stack);
