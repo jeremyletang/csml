@@ -30,20 +30,21 @@ typedef struct vector_##type_name##_t {\
     T               *(*front)(struct vector_##type_name##_t *self);\
     T               *(*back)(struct vector_##type_name##_t *self);\
     T               *(*at)(struct vector_##type_name##_t *self);\
-    bool            (*push_back)(struct vector_##type_name##_t *self, T item);\
+    void            (*push_back)(struct vector_##type_name##_t *self, T item);\
     void            (*pop_back)(struct vector_##type_name##_t *self);\
     bool            (*is_empty)(struct vector_##type_name##_t *self);\
     unsigned int    (*len)(struct vector_##type_name##_t *self);\
     unsigned int    (*capacity)(struct vector_##type_name##_t *self);\
-    void            (*resize)(struct vector_##type_name##_t *self);\
+    void            (*resize)(struct vector_##type_name##_t *self, unsigned int new_capacity);\
     void            (*clear)(struct vector_##type_name##_t *self);\
+    void            (*for_each)(struct vector_##type_name##_t *self, void *data);\
     bool            (*free)(struct vector_##type_name##_t *self);\
     T               *stored_data;\
     int             size;\
     int             cap;\
 } vector_##type_name##_t;\
 \
-void            vector_##type_name##_t_initialize(struct vector_##type_name##_t *self, bool type);\
+bool            vector_##type_name##_t_initialize(struct vector_##type_name##_t *self, unsigned int capacity, bool type);\
 bool            vector_##type_name##_t_delete_heap(struct vector_##type_name##_t *self);\
 bool            vector_##type_name##_t_delete_stacked(struct vector_##type_name##_t *self);\
 void            vector_##type_name##_t_delete_in(struct vector_##type_name##_t *self);\
@@ -56,24 +57,110 @@ void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *s
 bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self);\
 unsigned int    vector_##type_name##_t_len(struct vector_##type_name##_t *self);\
 unsigned int    vector_##type_name##_t_capacity(struct vector_##type_name##_t *self);\
-void            vector_##type_name##_t_resize(struct vector_##type_name##_t *self);\
+void            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity);\
 void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self);\
+void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data);\
 \
 vector_##type_name##_t *new_vector_##type_name##_t(unsigned int capacity) {\
     vector_##type_name##_t *self = malloc(sizeof(vector_##type_name##_t));\
     if (self) {\
-        self->stored_data = malloc(sizeof(T) * (capacity+ 1 ));\
-        if (self->stored_data) {\
-            self->cap = capacity;\
-            self->size = 0;\
-            \
-        } else {\
+        if (!vector_##type_name##_t_initialize(self, capacity, true)) {\
             free(self);\
             self = 0;\
         }\
     }\
     return self;\
-}
+}\
+\
+vector_##type_name##_t stacked_vector_##type_name##_t(unsigned int capacity) {\
+    vector_##type_name##_t self;\
+    vector_##type_name##_t_initialize(&self, capacity, false);\
+    return self;\
+}\
+\
+bool            vector_##type_name##_t_initialize(struct vector_##type_name##_t *self, unsigned int capacity, bool type) {\
+    bool return_value = false;\
+    self->stored_data = malloc(sizeof(T) * (capacity + 1 ));\
+    if (self->stored_data) {\
+        self->cap = capacity;\
+        self->size = 0;\
+        self->front = vector_##type_name##_t_front;\
+        self->back = vector_##type_name##_t_back;\
+        self->at = vector_##type_name##_t_at;\
+        self->push_back = vector_##type_name##_t_push_back;\
+        self->pop_back = vector_##type_name##_t_pop_back;\
+        self->is_empty = vector_##type_name##_t_is_empty;\
+        self->len = vector_##type_name##_t_len;\
+        self->capacity = vector_##type_name##_t_capacity;\
+        self->resize = vector_##type_name##_t_resize;\
+        self->clear = vector_##type_name##_t_clear;\
+        self->for_each = vector_##type_name##_t_for_each;\
+        if (type) {\
+            self->free = vector_##type_name##_t_delete_heap;\
+        } else {\
+            self->free = vector_##type_name##_t_delete_stacked;\
+        }\
+        return_value = true;\
+    }\
+    return return_value;\
+}\
+\
+bool            vector_##type_name##_t_delete_heap(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+bool            vector_##type_name##_t_delete_stacked(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+void            vector_##type_name##_t_delete_in(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+T               *vector_##type_name##_t_front(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+T               *vector_##type_name##_t_back(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+void            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item) {\
+    \
+}\
+\
+void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+unsigned int    vector_##type_name##_t_len(struct vector_##type_name##_t *self) {\
+    return self->size;\
+}\
+\
+unsigned int    vector_##type_name##_t_capacity(struct vector_##type_name##_t *self) {\
+    return self->cap;\
+}\
+\
+void            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity) {\
+    \
+}\
+\
+void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self) {\
+    \
+}\
+\
+void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data) {\
+    \
+}\
+\
 
 #define Vector(type_name) vector_##type_name##_t
 

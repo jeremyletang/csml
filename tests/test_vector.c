@@ -29,7 +29,14 @@ int main() {
 	// new stack on the heap
     Vector(int) 	*heap_vector =   new(Vector(int), 10);
     // new stack on the stack
-    // Vector(int) 	stacked_stack = stacked(Stack(int));
+    Vector(int) 	stacked_vector = stacked(Vector(int), 20);
+
+    printf("Heap vector len / capacity: %d / %d\n", 
+        heap_vector->len(heap_vector), 
+        heap_vector->capacity(heap_vector));
+    printf("Stacked vector len / capacity: %d / %d\n", 
+        stacked_vector.len(&stacked_vector), 
+        stacked_vector.capacity(&stacked_vector));
 
  //    // use heap stack
  //    printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
