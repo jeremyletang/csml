@@ -29,18 +29,18 @@
 typedef struct vector_##type_name##_t {\
     T               *(*front)(struct vector_##type_name##_t *self);\
     T               *(*back)(struct vector_##type_name##_t *self);\
-    T            	*(*at)(struct vector_##type_name##_t *self);\
+    T               *(*at)(struct vector_##type_name##_t *self);\
     bool            (*push_back)(struct vector_##type_name##_t *self, T item);\
     void            (*pop_back)(struct vector_##type_name##_t *self);\
     bool            (*is_empty)(struct vector_##type_name##_t *self);\
     unsigned int    (*len)(struct vector_##type_name##_t *self);\
     unsigned int    (*capacity)(struct vector_##type_name##_t *self);\
-    void		    (*resize)(struct vector_##type_name##_t *self);\
-   	void		    (*clear)(struct vector_##type_name##_t *self);\
+    void            (*resize)(struct vector_##type_name##_t *self);\
+    void            (*clear)(struct vector_##type_name##_t *self);\
     bool            (*free)(struct vector_##type_name##_t *self);\
-    T   			*stored_data;\
+    T               *stored_data;\
     int             size;\
-    int 			cap;\
+    int             cap;\
 } vector_##type_name##_t;\
 \
 void            vector_##type_name##_t_initialize(struct vector_##type_name##_t *self, bool type);\
@@ -62,15 +62,15 @@ void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self
 vector_##type_name##_t *new_vector_##type_name##_t(unsigned int capacity) {\
     vector_##type_name##_t *self = malloc(sizeof(vector_##type_name##_t));\
     if (self) {\
-    	self->stored_data = malloc(sizeof(T) * (capacity+ 1 ));\
-    	if (self->stored_data) {\
-    		self->cap = capacity;\
-    		self->size = 0;\
-    		\
-    	} else {\
-    		free(self);\
-    		self = 0;\
-    	}\
+        self->stored_data = malloc(sizeof(T) * (capacity+ 1 ));\
+        if (self->stored_data) {\
+            self->cap = capacity;\
+            self->size = 0;\
+            \
+        } else {\
+            free(self);\
+            self = 0;\
+        }\
     }\
     return self;\
 }
