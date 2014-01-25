@@ -49,6 +49,7 @@ bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T
 unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
+void            stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self);\
 T               *stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
 void            stack_##type_name##_t_pop(struct stack_##type_name##_t *self);\
@@ -83,11 +84,22 @@ void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool t
     }\
 }\
 \
+void stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self) {\
+    struct item_stack_##type_name##_t *tmp;\
+    while (self->top_item != 0) {\
+        tmp = self->top_item->next;\
+        free(self->top_item);\
+        self->top_item = tmp;\
+    }\
+}\
+\
 bool stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self) {\
+    stack_##type_name##_t_delete_in(self);\
     return true;\
 }\
 \
 bool stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self) {\
+    stack_##type_name##_t_delete_in(self);\
     return false;\
 }\
 \
@@ -112,7 +124,7 @@ void stack_##type_name##_t_pop(struct stack_##type_name##_t *self) {\
     if (self->top_item != 0) {\
         struct item_stack_##type_name##_t *tmp = self->top_item;\
         self->top_item = self->top_item->next;\
-        free(self->top_item);\
+        free(tmp);\
         self->size -= 1;\
     }\
 }\
