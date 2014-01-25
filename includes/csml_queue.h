@@ -85,7 +85,12 @@ void queue_##type_name##_t_initialize(struct queue_##type_name##_t *self, bool t
 }\
 \
 void queue_##type_name##_t_delete_in(struct queue_##type_name##_t *self) {\
-    \
+    struct item_queue_##type_name##_t *tmp;\
+    while (self->front_item) {\
+        tmp = self->front_item->next;\
+        free(self->front_item);\
+        self->front_item = tmp;\
+    }\
 }\
 \
 bool queue_##type_name##_t_delete_heap(struct queue_##type_name##_t *self) {\
