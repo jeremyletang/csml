@@ -19,8 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#ifndef CSTL_STACK_H
-#define CSTL_STACK_H
+#ifndef CSML_STACK_H
+#define CSML_STACK_H
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -36,6 +36,7 @@ struct item_stack_##type_name##_t {\
 typedef struct stack_##type_name##_t {\
     T               (*top)(struct stack_##type_name##_t *self);\
     bool            (*push)(struct stack_##type_name##_t *self, T item);\
+    bool            (*is_empty)(struct stack_##type_name##_t *self);\
     unsigned int    (*len)(struct stack_##type_name##_t *self);\
     bool            (*free)(struct stack_##type_name##_t *self);\
     struct item_stack_##type_name##_t   *top_item;\
@@ -48,6 +49,7 @@ unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
 T               stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
+bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
     stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
@@ -70,6 +72,7 @@ void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool t
     self->len = stack_##type_name##_t_len;\
     self->push = stack_##type_name##_t_push;\
     self->top = stack_##type_name##_t_top;\
+    self->is_empty = stack_##type_name##_t_is_empty;\
     if (type) {\
         self->free = stack_##type_name##_t_delete_heap;\
     } else {\
@@ -98,8 +101,12 @@ bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
     return return_value;\
 }\
 \
-T               stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
+T stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
     return self->top_item->item;\
+}\
+\
+bool stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self) {\
+    return self->size == 0;\
 }\
 \
 unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self) {\
