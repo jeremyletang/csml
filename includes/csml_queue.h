@@ -43,15 +43,16 @@ typedef struct queue_##type_name##_t {\
 } queue_##type_name##_t;\
 \
 void            queue_##type_name##_t_initialize(struct queue_##type_name##_t *self, bool type);\
-bool            queue_##type_name##_t_push(struct queue_##type_name##_t *self, T item);\
-unsigned int    queue_##type_name##_t_len(struct queue_##type_name##_t *self);\
 bool            queue_##type_name##_t_delete_heap(struct queue_##type_name##_t *self);\
 bool            queue_##type_name##_t_delete_stacked(struct queue_##type_name##_t *self);\
 void            queue_##type_name##_t_delete_in(struct queue_##type_name##_t *self);\
+\
 T               *queue_##type_name##_t_front(struct queue_##type_name##_t *self);\
 T               *queue_##type_name##_t_back(struct queue_##type_name##_t *self);\
-bool            queue_##type_name##_t_is_empty(struct queue_##type_name##_t *self);\
 void            queue_##type_name##_t_pop(struct queue_##type_name##_t *self);\
+bool            queue_##type_name##_t_push(struct queue_##type_name##_t *self, T item);\
+unsigned int    queue_##type_name##_t_len(struct queue_##type_name##_t *self);\
+bool            queue_##type_name##_t_is_empty(struct queue_##type_name##_t *self);\
 \
 queue_##type_name##_t *new_queue_##type_name##_t() {\
     queue_##type_name##_t *self = malloc(sizeof(queue_##type_name##_t));\

@@ -24,10 +24,10 @@
 #include "csml_vector.h"
 #include "csml_string.h"
 
-#define new(complet_type_name)      _new(new_, complet_type_name)
-#define _new(arg1, arg2)            arg1##arg2()
-#define stacked(complet_type_name)  _stacked(stacked_, complet_type_name)
-#define _stacked(arg1, arg2)        arg1##arg2()
+#define new(complet_type_name, ...)      _new(new_, complet_type_name, __VA_ARGS__)
+#define _new(arg1, arg2, args)            arg1##arg2(args)
+#define stacked(complet_type_name, ...)  _stacked(stacked_, complet_type_name, __VA_ARGS__)
+#define _stacked(arg1, arg2, args)        arg1##arg2(args)
 #define delete(var)\
 if ((var) != 0) {\
     if ((var)->free(var) == true)\

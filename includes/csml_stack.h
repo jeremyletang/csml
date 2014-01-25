@@ -24,7 +24,6 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 #define impl_stack(type_name, T)\
 \
@@ -45,14 +44,15 @@ typedef struct stack_##type_name##_t {\
 } stack_##type_name##_t;\
 \
 void            stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type);\
-bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
-unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
 bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
 void            stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self);\
+\
 T               *stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
-bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
 void            stack_##type_name##_t_pop(struct stack_##type_name##_t *self);\
+bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
+bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
+unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
     stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\

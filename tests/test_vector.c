@@ -23,33 +23,34 @@
 #include "csml.h"
 
 // call the macros with the givens types to implement a stack for this type.
-impl_queue(int, int);
+impl_vector(int, int);
 
 int main() {
-	// new queue on the heap
-    Queue(int) 	*heap_queue =   new(Queue(int));
-    // // new stack on the stack
-    Queue(int) 	stacked_queue = stacked(Queue(int));
+	// new stack on the heap
+    Vector(int) 	*heap_vector =   new(Vector(int), 10);
+    // new stack on the stack
+    // Vector(int) 	stacked_stack = stacked(Stack(int));
 
-    // // use heap stack
-    // printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
-    // heap_stack->push(heap_stack, 21);
-    // heap_stack->push(heap_stack, 42);
-    // heap_stack->push(heap_stack, 84);
-    // printf("Heap Stack size after a push: %d\n", heap_stack->len(heap_stack));
-    // heap_stack->pop(heap_stack);
-    // printf("Heap Stack size after a pop: %d\n", heap_stack->len(heap_stack));
-    // printf("Heap Stack top value after a push: %d\n", *heap_stack->top(heap_stack));
+ //    // use heap stack
+ //    printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
+ //    heap_stack->push(heap_stack, 21);
+ //    heap_stack->push(heap_stack, 42);
+ //    heap_stack->push(heap_stack, 84);
+ //    printf("Heap Stack size after a push: %d\n", heap_stack->len(heap_stack));
+ //    heap_stack->pop(heap_stack);
+ //    printf("Heap Stack size after a pop: %d\n", heap_stack->len(heap_stack));
+ //    printf("Heap Stack top value after a push: %d\n", *heap_stack->top(heap_stack));
 
-    // // use stacked stack
-    // printf("Stacked Stack size: %d\n", stacked_stack.len(&stacked_stack));
-    // stacked_stack.push(&stacked_stack, 21);
-    // printf("Stacked Stack size after a push: %d\n", stacked_stack.len(&stacked_stack));
-    // printf("Stacked Stack top value after a push: %d\n", *stacked_stack.top(&stacked_stack));
+ //    // use stacked stack
+ //    printf("Stacked Stack size: %d\n", stacked_stack.len(&stacked_stack));
+ //    stacked_stack.push(&stacked_stack, 21);
+ //    printf("Stacked Stack size after a push: %d\n", stacked_stack.len(&stacked_stack));
+ //    printf("Stacked Stack top value after a push: %d\n", *stacked_stack.top(&stacked_stack));
 
-    // // delete the stack allocated on the heap
-    // delete(heap_stack);
-    // // delete the stack allocated on the stack...
-    // delete(&stacked_stack);
+ //    // delete the stack allocated on the heap
+ //    delete(heap_stack);
+ //    // delete the stack allocated on the stack...
+ //    delete(&stacked_stack);
+
     return 0;
 }
