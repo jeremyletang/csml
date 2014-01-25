@@ -36,22 +36,50 @@ struct item_stack_##type_name##_t {\
 typedef struct stack_##type_name##_t {\
     bool            (*push)(struct stack_##type_name##_t *self, T item);\
     unsigned int    (*len)(struct stack_##type_name##_t *self);\
+    bool            (*free)(struct stack_##type_name##_t *self);\
     struct item_stack_##type_name##_t   *top;\
     int                                 size;\
 } stack_##type_name##_t;\
 \
+void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type);\
 bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
 unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
+bool stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
+bool stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
     stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
     printf("create\n");\
     if (self != 0) {\
         self->size = 0;\
-        self->len = stack_##type_name##_t_len;\
-        self->push = stack_##type_name##_t_push;\
+        stack_##type_name##_t_initialize(self, true);\
     }\
     return self;\
+}\
+\
+stack_##type_name##_t stacked_stack_##type_name##_t() {\
+    stack_##type_name##_t self;\
+    self.size = 0;\
+    stack_##type_name##_t_initialize(&self, false);\
+    return self;\
+}\
+\
+void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type) {\
+    self->len = stack_##type_name##_t_len;\
+    self->push = stack_##type_name##_t_push;\
+    if (type) {\
+        self->free = stack_##type_name##_t_delete_heap;\
+    } else {\
+        self->free = stack_##type_name##_t_delete_stacked;\
+    }\
+}\
+\
+bool stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self) {\
+    return true;\
+}\
+\
+bool stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self) {\
+    return false;\
 }\
 \
 bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
@@ -70,12 +98,8 @@ bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
 \
 unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self) {\
     return self->size;\
-}\
-\
-stack_##type_name##_t stacked_stack_##type_name##_t() {\
-    stack_##type_name##_t tmp;\
-    return tmp;\
 }
+
 
 #define Stack(type_name) stack_##type_name##_t
 
