@@ -55,7 +55,6 @@ void            queue_##type_name##_t_pop(struct queue_##type_name##_t *self);\
 \
 queue_##type_name##_t *new_queue_##type_name##_t() {\
     queue_##type_name##_t *self = malloc(sizeof(queue_##type_name##_t));\
-    printf("create\n");\
     if (self != 0) {\
         queue_##type_name##_t_initialize(self, true);\
     }\
@@ -100,7 +99,18 @@ bool queue_##type_name##_t_delete_stacked(struct queue_##type_name##_t *self) {\
 }\
 \
 bool queue_##type_name##_t_push(struct queue_##type_name##_t *self, T item) {\
-   \
+    bool return_value = false;\
+    struct item_queue_##type_name##_t *tmp = malloc(sizeof(item_queue_##type_name##_t));\
+    if (!tmp) {\
+        if (!self->front_item && !self->back_item) {\
+            self->back_item->next = tmp;\
+        }\
+        self->back_item->next = tmp;\
+        self->back_item = tmp;\
+        self->size += 1;\
+        return_value = true;\
+    }\
+    return return_value;\
 }\
 \
 T *queue_##type_name##_t_front(struct queue_##type_name##_t *self) {\
@@ -112,7 +122,11 @@ T *queue_##type_name##_t_back(struct queue_##type_name##_t *self) {\
 }\
 \
 void queue_##type_name##_t_pop(struct queue_##type_name##_t *self) {\
-    \
+    if (self->front_item) {\
+        struct item_queue_##type_name##_t *tmp = self->front_item;\
+        self->front_item = tmp->next;\
+        free(tmp);\
+    }\
 }\
 \
 bool queue_##type_name##_t_is_empty(struct queue_##type_name##_t *self) {\

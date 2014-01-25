@@ -27,7 +27,7 @@ impl_stack(int, int);
 
 int main() {
 	// new stack on the heap
-    Stack(int) 	*heap_stack = new(Stack(int));
+    Stack(int) 	*heap_stack =   new(Stack(int));
     // new stack on the stack
     Stack(int) 	stacked_stack = stacked(Stack(int));
 
