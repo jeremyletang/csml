@@ -34,18 +34,20 @@ struct item_stack_##type_name##_t {\
 }item_stack_##type_name##_t;\
 \
 typedef struct stack_##type_name##_t {\
+    T               (*top)(struct stack_##type_name##_t *self);\
     bool            (*push)(struct stack_##type_name##_t *self, T item);\
     unsigned int    (*len)(struct stack_##type_name##_t *self);\
     bool            (*free)(struct stack_##type_name##_t *self);\
-    struct item_stack_##type_name##_t   *top;\
+    struct item_stack_##type_name##_t   *top_item;\
     int                                 size;\
 } stack_##type_name##_t;\
 \
-void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type);\
-bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
-unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
-bool stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
-bool stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
+void            stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type);\
+bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
+unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
+bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
+bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
+T               stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
 \
 stack_##type_name##_t *new_stack_##type_name##_t() {\
     stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
@@ -67,6 +69,7 @@ stack_##type_name##_t stacked_stack_##type_name##_t() {\
 void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type) {\
     self->len = stack_##type_name##_t_len;\
     self->push = stack_##type_name##_t_push;\
+    self->top = stack_##type_name##_t_top;\
     if (type) {\
         self->free = stack_##type_name##_t_delete_heap;\
     } else {\
@@ -87,14 +90,17 @@ bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
     struct item_stack_##type_name##_t *tmp = malloc(sizeof(item_stack_##type_name##_t));\
     if (tmp != 0) {\
         tmp->item = item;\
-        tmp->next = self->top;\
-        self->top = tmp;\
+        tmp->next = self->top_item;\
+        self->top_item = tmp;\
         self->size += 1;\
         return_value = true;\
     }\
     return return_value;\
 }\
 \
+T               stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
+    return self->top_item->item;\
+}\
 \
 unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self) {\
     return self->size;\
