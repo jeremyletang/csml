@@ -22,7 +22,9 @@
 #ifndef CSML_VECTOR_H
 #define CSML_VECTOR_H
 
-#include <stdio.h>
+#include <stdbool.h>    // c99 bool
+#include <stdlib.h>     // malloc, free
+#include <string.h>     // memcpy
 
 #define impl_vector(type_name, T)\
 \
@@ -30,12 +32,12 @@ typedef struct vector_##type_name##_t {\
     T               *(*front)(struct vector_##type_name##_t *self);\
     T               *(*back)(struct vector_##type_name##_t *self);\
     T               *(*at)(struct vector_##type_name##_t *self);\
-    void            (*push_back)(struct vector_##type_name##_t *self, T item);\
+    bool            (*push_back)(struct vector_##type_name##_t *self, T item);\
     void            (*pop_back)(struct vector_##type_name##_t *self);\
     bool            (*is_empty)(struct vector_##type_name##_t *self);\
     unsigned int    (*len)(struct vector_##type_name##_t *self);\
     unsigned int    (*capacity)(struct vector_##type_name##_t *self);\
-    void            (*resize)(struct vector_##type_name##_t *self, unsigned int new_capacity);\
+    bool            (*resize)(struct vector_##type_name##_t *self, unsigned int new_capacity);\
     void            (*clear)(struct vector_##type_name##_t *self);\
     void            (*for_each)(struct vector_##type_name##_t *self, void *data);\
     bool            (*free)(struct vector_##type_name##_t *self);\
@@ -52,12 +54,12 @@ void            vector_##type_name##_t_delete_in(struct vector_##type_name##_t *
 T               *vector_##type_name##_t_front(struct vector_##type_name##_t *self);\
 T               *vector_##type_name##_t_back(struct vector_##type_name##_t *self);\
 T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self);\
-void            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item);\
+bool            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item);\
 void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *self);\
 bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self);\
 unsigned int    vector_##type_name##_t_len(struct vector_##type_name##_t *self);\
 unsigned int    vector_##type_name##_t_capacity(struct vector_##type_name##_t *self);\
-void            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity);\
+bool            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity);\
 void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self);\
 void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data);\
 \
@@ -106,31 +108,43 @@ bool            vector_##type_name##_t_initialize(struct vector_##type_name##_t 
 }\
 \
 bool            vector_##type_name##_t_delete_heap(struct vector_##type_name##_t *self) {\
-    \
+    vector_##type_name##_t_delete_in(self);\
+    return true;\
 }\
 \
 bool            vector_##type_name##_t_delete_stacked(struct vector_##type_name##_t *self) {\
-    \
+    vector_##type_name##_t_delete_in(self);\
+    return false;\
 }\
 \
 void            vector_##type_name##_t_delete_in(struct vector_##type_name##_t *self) {\
-    \
+    if (self->stored_data) {\
+        free(self->stored_data);\
+    }\
 }\
 \
 T               *vector_##type_name##_t_front(struct vector_##type_name##_t *self) {\
-    \
+    return &self->stored_data[0];\
 }\
 \
 T               *vector_##type_name##_t_back(struct vector_##type_name##_t *self) {\
-    \
+    return &self->stored_data[self->size - 1];\
 }\
 \
 T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self) {\
     \
 }\
 \
-void            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item) {\
-    \
+bool            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item) {\
+    bool return_value = true;\
+    if (self->size == self->cap) {\
+        return_value = self->resize(self, self->cap * 2);\
+    }\
+    if (return_value) {\
+        self->stored_data[self->size] = item;\
+        self->size += 1;\
+    }\
+    return return_value;\
 }\
 \
 void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *self) {\
@@ -138,7 +152,7 @@ void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *s
 }\
 \
 bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self) {\
-    \
+   return self->size == 0;\
 }\
 \
 unsigned int    vector_##type_name##_t_len(struct vector_##type_name##_t *self) {\
@@ -149,8 +163,19 @@ unsigned int    vector_##type_name##_t_capacity(struct vector_##type_name##_t *s
     return self->cap;\
 }\
 \
-void            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity) {\
-    \
+bool            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity) {\
+    T *tmp_data =       self->stored_data;\
+    bool return_value = false;\
+    if (new_capacity > self->cap) {\
+        self->stored_data = malloc(sizeof(T) * (new_capacity));\
+        if (self->stored_data) {\
+            memcpy(self->stored_data, tmp_data, self->cap);\
+            self->cap = new_capacity;\
+            free(tmp_data);\
+            return_value = true;\
+        }\
+    }\
+    return return_value;\
 }\
 \
 void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self) {\
@@ -159,8 +184,7 @@ void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self
 \
 void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data) {\
     \
-}\
-\
+}
 
 #define Vector(type_name) vector_##type_name##_t
 

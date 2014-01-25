@@ -27,7 +27,7 @@ impl_vector(int, int);
 
 int main() {
 	// new stack on the heap
-    Vector(int) 	*heap_vector =   new(Vector(int), 10);
+    Vector(int) 	*heap_vector =   new(Vector(int), 1);
     // new stack on the stack
     Vector(int) 	stacked_vector = stacked(Vector(int), 20);
 
@@ -37,6 +37,25 @@ int main() {
     printf("Stacked vector len / capacity: %d / %d\n", 
         stacked_vector.len(&stacked_vector), 
         stacked_vector.capacity(&stacked_vector));
+
+    heap_vector->push_back(heap_vector, 42);
+    printf("Heap vector front / back: %d / %d\n", 
+        *heap_vector->front(heap_vector), 
+        *heap_vector->back(heap_vector));
+    heap_vector->push_back(heap_vector, 21);
+    printf("Heap vector front / back: %d / %d\n", 
+        *heap_vector->front(heap_vector), 
+        *heap_vector->back(heap_vector));
+    printf("Heap vector len / capacity: %d / %d\n", 
+        heap_vector->len(heap_vector), 
+        heap_vector->capacity(heap_vector));
+    heap_vector->push_back(heap_vector, 84);
+    printf("Heap vector front / back: %d / %d\n", 
+        *heap_vector->front(heap_vector), 
+        *heap_vector->back(heap_vector));
+    printf("Heap vector len / capacity: %d / %d\n", 
+        heap_vector->len(heap_vector), 
+        heap_vector->capacity(heap_vector));
 
  //    // use heap stack
  //    printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
@@ -54,10 +73,10 @@ int main() {
  //    printf("Stacked Stack size after a push: %d\n", stacked_stack.len(&stacked_stack));
  //    printf("Stacked Stack top value after a push: %d\n", *stacked_stack.top(&stacked_stack));
 
- //    // delete the stack allocated on the heap
- //    delete(heap_stack);
- //    // delete the stack allocated on the stack...
- //    delete(&stacked_stack);
+    // delete the stack allocated on the heap
+    delete(heap_vector);
+    // delete the stack allocated on the stack...
+    delete(&stacked_vector);
 
     return 0;
 }

@@ -22,6 +22,9 @@
 #ifndef CSML_QUEUE_H
 #define CSML_QUEUE_H
 
+#include <stdbool.h>    // c99 bool
+#include <stdlib.h>     // malloc, free
+
 #define impl_queue(type_name, T)\
 \
 struct item_queue_##type_name##_t {\

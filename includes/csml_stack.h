@@ -22,8 +22,8 @@
 #ifndef CSML_STACK_H
 #define CSML_STACK_H
 
-#include <stdbool.h>
-#include <stdlib.h>
+#include <stdbool.h>    // c99 bool
+#include <stdlib.h>     // malloc, free
 
 #define impl_stack(type_name, T)\
 \
