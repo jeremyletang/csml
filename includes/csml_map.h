@@ -25,6 +25,12 @@
 #include <stdbool.h>    // c99 bool
 #include <stdlib.h>     // malloc, free
 #include <string.h>     // memcpy
+#include "csml_pair.h"
 
+#define impl_map(key_type, Key, value_type, T)\
+impl_pair(inner_map_##key_typ, Key, inner_map_##value_type, T)\
+\
+
+#define Map(key_type, value_type) pair_##key_type##_##value_type##_t
 
 #endif // CSML_MAP_H

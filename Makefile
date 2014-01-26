@@ -3,6 +3,7 @@ bin_stack       = test_stack
 bin_queue       = test_queue
 bin_vector 		= test_vector
 bin_pair 		= test_pair
+bin_map 		= test_map
 bin_path		= bin
 csml_path 		= -I includes/
 rm 				= rm -rf
@@ -13,6 +14,7 @@ all:
 	$(CC) $(csml_path) tests/test_queue.c -o $(bin_path)/$(bin_queue)    
 	$(CC) $(csml_path) tests/test_vector.c -o $(bin_path)/$(bin_vector)    
 	$(CC) $(csml_path) tests/test_pair.c -o $(bin_path)/$(bin_pair)    
+	$(CC) $(csml_path) tests/test_map.c -o $(bin_path)/$(bin_map)    
 
 clean:
 	$(rm) $(bin_path)
