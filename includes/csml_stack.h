@@ -30,7 +30,7 @@
 struct item_stack_##type_name##_t {\
     T                                   item;\
     struct item_stack_##type_name##_t   *next;\
-}item_stack_##type_name##_t;\
+} item_stack_##type_name##_t;\
 \
 typedef struct stack_##type_name##_t {\
     T               *(*top)(struct stack_##type_name##_t *self);\
@@ -39,6 +39,7 @@ typedef struct stack_##type_name##_t {\
     bool            (*is_empty)(struct stack_##type_name##_t *self);\
     unsigned int    (*len)(struct stack_##type_name##_t *self);\
     bool            (*free)(struct stack_##type_name##_t *self);\
+    \
     struct item_stack_##type_name##_t   *top_item;\
     int                                 size;\
 } stack_##type_name##_t;\

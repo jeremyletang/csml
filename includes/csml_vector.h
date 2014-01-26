@@ -41,6 +41,7 @@ typedef struct vector_##type_name##_t {\
     void            (*clear)(struct vector_##type_name##_t *self);\
     void            (*for_each)(struct vector_##type_name##_t *self, void (*func)(T *item, void *data), void *data);\
     bool            (*free)(struct vector_##type_name##_t *self);\
+    \
     T               *stored_data;\
     int             size;\
     int             cap;\

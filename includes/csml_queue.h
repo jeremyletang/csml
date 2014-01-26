@@ -40,6 +40,7 @@ typedef struct queue_##type_name##_t {\
     bool            (*is_empty)(struct queue_##type_name##_t *self);\
     unsigned int    (*len)(struct queue_##type_name##_t *self);\
     bool            (*free)(struct queue_##type_name##_t *self);\
+    \
     struct item_queue_##type_name##_t   *front_item;\
     struct item_queue_##type_name##_t   *back_item;\
     int                                 size;\

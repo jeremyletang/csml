@@ -26,10 +26,15 @@
 #include "csml_pair.h"
 #include "csml_string.h"
 
+// Heap allocator constructor
 #define new(complet_type_name, ...)      _new(new_, complet_type_name, __VA_ARGS__)
 #define _new(arg1, arg2, ...)            arg1##arg2(__VA_ARGS__)
+
+// Stack constructor
 #define stacked(complet_type_name, ...)  _stacked(stacked_, complet_type_name, __VA_ARGS__)
 #define _stacked(arg1, arg2, ...)        arg1##arg2(__VA_ARGS__)
+
+// Destructor for heap and stack object
 #define delete(var)\
 if ((var) != 0) {\
     if ((var)->free(var) == true)\
