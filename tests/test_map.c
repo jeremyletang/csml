@@ -33,28 +33,17 @@ int main() {
     // new stack on the heap
     Map(int, char)     *heap_map =   new(Map(int, char), cmp_key);
     // new stack on the stack
-    // Map(int, char)     stacked_pair = stacked(Pair(int, char), 20, 'b');
+    Map(int, char)     stacked_map = stacked(Map(int, char), cmp_key);
 
-    // printf("Heap pair = first_item: %d / second_item: %c \n", 
-    //     heap_pair->first_item,
-    //     heap_pair->second_item);
-    // printf("Stacked pair = first_item: %d / second_item: %c \n", 
-    //     stacked_pair.first_item,
-    //     stacked_pair.second_item);
+    heap_map->insert(heap_map, 1, 'b');
+    heap_map->insert(heap_map, 2, 'c');
+    heap_map->insert(heap_map, 3, 'f');
+    printf("Heap map at 2: %c\n", *heap_map->at(heap_map, 2));
 
-    // printf("Now swap them: \n");
-    // heap_pair->swap(heap_pair, &stacked_pair);
-    // printf("Heap pair = first_item: %d / second_item: %c \n", 
-    //     heap_pair->first_item,
-    //     heap_pair->second_item);
-    // printf("Stacked pair = first_item: %d / second_item: %c \n", 
-    //     stacked_pair.first_item,
-    //     stacked_pair.second_item);
-
-    // // delete the pair allocated on the heap
-    // delete(heap_pair);
-    // // delete the pair allocated on the stack...
-    // delete(&stacked_pair);
+    // delete the map allocated on the heap
+    delete(heap_map);
+    // delete the map allocated on the stack...
+    delete(&stacked_map);
 
     return 0;
 }
