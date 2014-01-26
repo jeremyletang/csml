@@ -147,6 +147,6 @@ unsigned int queue_##type_name##_t_len(struct queue_##type_name##_t *self) {\
     return self->size;\
 }
 
-#define Queue(type_name) queue_##type_name##_t
+#define queue(type_name) queue_##type_name##_t
 
 #endif // CSML_QUEUE_H

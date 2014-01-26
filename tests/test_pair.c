@@ -27,9 +27,9 @@ impl_pair(int, int, char, char);
 
 int main() {
 	// new stack on the heap
-    Pair(int, char) 	*heap_pair =   new(Pair(int, char), 10, 'a');
+    pair(int, char) 	*heap_pair =   new(pair(int, char), 10, 'a');
     // new stack on the stack
-    Pair(int, char) 	stacked_pair = stacked(Pair(int, char), 20, 'b');
+    pair(int, char) 	stacked_pair = stacked(pair(int, char), 20, 'b');
 
     printf("Heap pair = first_item: %d / second_item: %c \n", 
         heap_pair->first,

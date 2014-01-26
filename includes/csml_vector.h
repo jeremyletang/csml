@@ -197,6 +197,6 @@ void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *s
     }\
 }
 
-#define Vector(type_name) vector_##type_name##_t
+#define vector(type_name) vector_##type_name##_t
 
 #endif // CSML_VECTOR_H

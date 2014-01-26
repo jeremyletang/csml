@@ -31,9 +31,9 @@ bool cmp_key(int i, int j) {
 
 int main() {
     // new stack on the heap
-    Map(int, char)     *heap_map =   new(Map(int, char), cmp_key);
+    map(int, char)     *heap_map =   new(map(int, char), cmp_key);
     // new stack on the stack
-    Map(int, char)     stacked_map = stacked(Map(int, char), cmp_key);
+    map(int, char)     stacked_map = stacked(map(int, char), cmp_key);
 
     heap_map->insert(heap_map, 1, 'b');
     heap_map->insert(heap_map, 2, 'c');

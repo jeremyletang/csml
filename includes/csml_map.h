@@ -32,7 +32,7 @@
 impl_pair(inner_map_##key_type, Key_T, inner_map_##value_type, T);\
 \
 struct item_map_##key_type##_##value_type##_t {\
-    Pair(inner_map_##key_type, inner_map_##value_type)  item;\
+    pair(inner_map_##key_type, inner_map_##value_type)  item;\
     struct item_map_##key_type##_##value_type##_t       *next;\
 } item_map_##key_type##_##value_type##_t;\
 \
@@ -140,7 +140,7 @@ bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##
             return 0;\
         }\
         tmp->next = self->first_item;\
-        tmp->item = stacked(Pair(inner_map_##key_type, inner_map_##value_type), key, value);\
+        tmp->item = stacked(pair(inner_map_##key_type, inner_map_##value_type), key, value);\
         self->first_item = tmp;\
         self->size += 1;\
     }\
@@ -187,7 +187,7 @@ void            map_##key_type##_##value_type##_t_clear(struct map_##key_type##_
     self->first_item = 0;\
 }\
 
-#define Map(key_type, value_type) map_##key_type##_##value_type##_t
+#define map(key_type, value_type) map_##key_type##_##value_type##_t
 
 #endif // CSML_MAP_H
 

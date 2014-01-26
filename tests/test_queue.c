@@ -27,9 +27,9 @@ impl_queue(int, int);
 
 int main() {
 	// new queue on the heap
-    Queue(int) 	*heap_queue =   new(Queue(int));
+    queue(int) 	*heap_queue =   new(queue(int));
     // // new stack on the stack
-    Queue(int) 	stacked_queue = stacked(Queue(int));
+    queue(int) 	stacked_queue = stacked(queue(int));
 
     // // use heap stack
     // printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));

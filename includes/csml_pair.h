@@ -87,6 +87,6 @@ void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##t
     other->second =    tmp_secomd;\
 }
 
-#define Pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t
+#define pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t
 
 #endif // CSML_PAIR_H

@@ -24,6 +24,9 @@
 #include "csml_vector.h"
 #include "csml_map.h"
 #include "csml_pair.h"
+#include "csml_forward_list.h"
+#include "csml_list.h"
+#include "csml_priority_queue.h"
 #include "csml_string.h"
 
 // Heap allocator constructor

@@ -27,9 +27,9 @@ impl_stack(int, int);
 
 int main() {
 	// new stack on the heap
-    Stack(int) 	*heap_stack =   new(Stack(int));
+    stack(int) 	*heap_stack =   new(stack(int));
     // new stack on the stack
-    Stack(int) 	stacked_stack = stacked(Stack(int));
+    stack(int) 	stacked_stack = stacked(stack(int));
 
     // use heap stack
     printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
