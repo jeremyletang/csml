@@ -25,9 +25,14 @@
 // call the macros with the givens types to implement a stack for this type.
 impl_vector(int, int);
 
+void increment_of_ten(int *item, void *data) {
+    (void)(data);
+    *item += 10;
+}
+
 int main() {
 	// new stack on the heap
-    Vector(int) 	*heap_vector =   new(Vector(int), 1);
+    Vector(int) 	*heap_vector =   new(Vector(int), 2);
     // new stack on the stack
     Vector(int) 	stacked_vector = stacked(Vector(int), 20);
 
@@ -50,12 +55,19 @@ int main() {
         heap_vector->len(heap_vector), 
         heap_vector->capacity(heap_vector));
     heap_vector->push_back(heap_vector, 84);
+    heap_vector->for_each(heap_vector, increment_of_ten, 0);
+    printf("After call to for_each, item1: %d, item2: %d, item3: %d\n", 
+        *heap_vector->at(heap_vector, 0),
+        *heap_vector->at(heap_vector, 1),
+        *heap_vector->at(heap_vector, 2));
+    heap_vector->pop_back(heap_vector);
     printf("Heap vector front / back: %d / %d\n", 
         *heap_vector->front(heap_vector), 
         *heap_vector->back(heap_vector));
     printf("Heap vector len / capacity: %d / %d\n", 
         heap_vector->len(heap_vector), 
         heap_vector->capacity(heap_vector));
+    printf("Heap vector at index 1: %d\n", *heap_vector->at(heap_vector, 1));
 
  //    // use heap stack
  //    printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));

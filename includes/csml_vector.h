@@ -31,7 +31,7 @@
 typedef struct vector_##type_name##_t {\
     T               *(*front)(struct vector_##type_name##_t *self);\
     T               *(*back)(struct vector_##type_name##_t *self);\
-    T               *(*at)(struct vector_##type_name##_t *self);\
+    T               *(*at)(struct vector_##type_name##_t *self, unsigned int index);\
     bool            (*push_back)(struct vector_##type_name##_t *self, T item);\
     void            (*pop_back)(struct vector_##type_name##_t *self);\
     bool            (*is_empty)(struct vector_##type_name##_t *self);\
@@ -39,7 +39,7 @@ typedef struct vector_##type_name##_t {\
     unsigned int    (*capacity)(struct vector_##type_name##_t *self);\
     bool            (*resize)(struct vector_##type_name##_t *self, unsigned int new_capacity);\
     void            (*clear)(struct vector_##type_name##_t *self);\
-    void            (*for_each)(struct vector_##type_name##_t *self, void *data);\
+    void            (*for_each)(struct vector_##type_name##_t *self, void (*func)(T *item, void *data), void *data);\
     bool            (*free)(struct vector_##type_name##_t *self);\
     T               *stored_data;\
     int             size;\
@@ -53,7 +53,7 @@ void            vector_##type_name##_t_delete_in(struct vector_##type_name##_t *
 \
 T               *vector_##type_name##_t_front(struct vector_##type_name##_t *self);\
 T               *vector_##type_name##_t_back(struct vector_##type_name##_t *self);\
-T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self);\
+T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self, unsigned int index);\
 bool            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item);\
 void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *self);\
 bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self);\
@@ -61,7 +61,7 @@ unsigned int    vector_##type_name##_t_len(struct vector_##type_name##_t *self);
 unsigned int    vector_##type_name##_t_capacity(struct vector_##type_name##_t *self);\
 bool            vector_##type_name##_t_resize(struct vector_##type_name##_t *self, unsigned int new_capacity);\
 void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self);\
-void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data);\
+void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void (*func)(T *item, void *data), void *data);\
 \
 vector_##type_name##_t *new_vector_##type_name##_t(unsigned int capacity) {\
     vector_##type_name##_t *self = malloc(sizeof(vector_##type_name##_t));\
@@ -131,8 +131,12 @@ T               *vector_##type_name##_t_back(struct vector_##type_name##_t *self
     return &self->stored_data[self->size - 1];\
 }\
 \
-T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self) {\
-    \
+T               *vector_##type_name##_t_at(struct vector_##type_name##_t *self, unsigned int index) {\
+    T *return_value = 0;\
+    if (index < self->size) {\
+        return_value = &self->stored_data[index];\
+    }\
+    return return_value;\
 }\
 \
 bool            vector_##type_name##_t_push_back(struct vector_##type_name##_t *self, T item) {\
@@ -148,7 +152,9 @@ bool            vector_##type_name##_t_push_back(struct vector_##type_name##_t *
 }\
 \
 void            vector_##type_name##_t_pop_back(struct vector_##type_name##_t *self) {\
-    \
+    if (self->size > 0) {\
+        self->size -= 1;\
+    }\
 }\
 \
 bool            vector_##type_name##_t_is_empty(struct vector_##type_name##_t *self) {\
@@ -169,7 +175,7 @@ bool            vector_##type_name##_t_resize(struct vector_##type_name##_t *sel
     if (new_capacity > self->cap) {\
         self->stored_data = malloc(sizeof(T) * (new_capacity));\
         if (self->stored_data) {\
-            memcpy(self->stored_data, tmp_data, self->cap);\
+            memcpy(self->stored_data, tmp_data, sizeof(T) * self->cap);\
             self->cap = new_capacity;\
             free(tmp_data);\
             return_value = true;\
@@ -179,11 +185,15 @@ bool            vector_##type_name##_t_resize(struct vector_##type_name##_t *sel
 }\
 \
 void            vector_##type_name##_t_clear(struct vector_##type_name##_t *self) {\
-    \
+    self->size = 0;\
 }\
 \
-void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void *data) {\
-    \
+void            vector_##type_name##_t_for_each(struct vector_##type_name##_t *self, void (*func)(T *item, void *data), void *data) {\
+    int iter = 0;\
+    while (iter <= self->size) {\
+        func(&self->stored_data[iter], data);\
+        iter += 1;\
+    }\
 }
 
 #define Vector(type_name) vector_##type_name##_t
