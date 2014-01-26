@@ -29,8 +29,8 @@
 #define impl_pair(type_name1, T1, type_name2, T2)\
 \
 typedef struct pair_##type_name1##_##type_name2##_t {\
-    T1 first_item;\
-    T2 second_item;\
+    T1 first;\
+    T2 second;\
     void    (*swap)(struct pair_##type_name1##_##type_name2##_t *self, \
         struct pair_##type_name1##_##type_name2##_t *other);\
     bool    (*free)(struct pair_##type_name1##_##type_name2##_t *self);\
@@ -43,25 +43,25 @@ bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair_##type_n
 void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##type_name2##_t *self, \
     struct pair_##type_name1##_##type_name2##_t *other);\
 \
-pair_##type_name1##_##type_name2##_t *new_pair_##type_name1##_##type_name2##_t(T1 first, T2 second) {\
+pair_##type_name1##_##type_name2##_t *new_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
     pair_##type_name1##_##type_name2##_t *self = malloc(sizeof(pair_##type_name1##_##type_name2##_t));\
     if (self) {\
-        pair_##type_name1##_##type_name2##_t_initialize(self, first, second, true);\
+        pair_##type_name1##_##type_name2##_t_initialize(self, first_item, second_item, true);\
     }\
     return self;\
 }\
 \
-pair_##type_name1##_##type_name2##_t stacked_pair_##type_name1##_##type_name2##_t(T1 first, T2 second) {\
+pair_##type_name1##_##type_name2##_t stacked_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
     pair_##type_name1##_##type_name2##_t self;\
-    pair_##type_name1##_##type_name2##_t_initialize(&self, first, second, false);\
+    pair_##type_name1##_##type_name2##_t_initialize(&self, first_item, second_item, false);\
     return self;\
 }\
 \
 void pair_##type_name1##_##type_name2##_t_initialize(struct pair_##type_name1##_##type_name2##_t *self, \
-    T1 first, T2 second, bool type) {\
-    self->first_item =  first;\
-    self->second_item = second;\
-    self->swap =        pair_##type_name1##_##type_name2##_t_swap;\
+    T1 first_item, T2 second_item, bool type) {\
+    self->first =  first_item;\
+    self->second = second_item;\
+    self->swap =   pair_##type_name1##_##type_name2##_t_swap;\
     if (type) {\
         self->free = pair_##type_name1##_##type_name2##_t_delete_heap;\
     } else {\
@@ -79,12 +79,12 @@ bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair_##type_n
 \
 void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##type_name2##_t *self, \
     struct pair_##type_name1##_##type_name2##_t *other) {\
-    T1 tmp_first =          self->first_item;\
-    T2 tmp_secomd =         self->second_item;\
-    self->first_item =      other->first_item;\
-    self->second_item =     other->second_item;\
-    other->first_item =     tmp_first;\
-    other->second_item =    tmp_secomd;\
+    T1 tmp_first =     self->first;\
+    T2 tmp_secomd =    self->second;\
+    self->first =      other->first;\
+    self->second =     other->second;\
+    other->first =     tmp_first;\
+    other->second =    tmp_secomd;\
 }
 
 #define Pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t

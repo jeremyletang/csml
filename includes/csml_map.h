@@ -116,8 +116,8 @@ T               *map_##key_type##_##value_type##_t_at(struct map_##key_type##_##
     T *return_value = 0;\
     struct item_map_##key_type##_##value_type##_t *tmp = self->first_item;\
     while (tmp && !return_value) {\
-        if (self->cmp_key_func(tmp->item.first_item, key)) {\
-            return_value = &tmp->item.second_item;\
+        if (self->cmp_key_func(tmp->item.first, key)) {\
+            return_value = &tmp->item.second;\
         } else {\
             tmp = tmp->next;\
         }\
@@ -128,7 +128,7 @@ bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##
     bool found_key = false;\
     struct item_map_##key_type##_##value_type##_t *tmp = self->first_item;\
     while (tmp && !found_key) {\
-        if (self->cmp_key_func(tmp->item.first_item, key)) {\
+        if (self->cmp_key_func(tmp->item.first, key)) {\
             found_key = true;\
         } else {\
             tmp = tmp->next;\
@@ -146,19 +146,20 @@ bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##
     }\
     return !found_key ? true : false;\
 }\
+\
 bool            map_##key_type##_##value_type##_t_remove(struct map_##key_type##_##value_type##_t *self, Key_T key) {\
     bool found_key = false;\
     struct item_map_##key_type##_##value_type##_t *first = self->first_item;\
     if (self->size == 0) {\
         found_key = false;\
-    } else if (self->cmp_key_func(self->first_item->item.first_item, key)) {\
+    } else if (self->cmp_key_func(self->first_item->item.first, key)) {\
         self->first_item = self->first_item->next;\
         free(first);\
         found_key = true;\
     } else {\
         struct item_map_##key_type##_##value_type##_t *second = self->first_item->next;\
         while (second && !found_key) {\
-            if (self->cmp_key_func(second->item.first_item, key)) {\
+            if (self->cmp_key_func(second->item.first, key)) {\
                 found_key = true;\
             } else {\
                 first = second;\
@@ -172,9 +173,11 @@ bool            map_##key_type##_##value_type##_t_remove(struct map_##key_type##
     }\
     return found_key;\
 }\
+\
 bool            map_##key_type##_##value_type##_t_is_empty(struct map_##key_type##_##value_type##_t *self) {\
     return self->size == 0;\
 }\
+\
 unsigned int    map_##key_type##_##value_type##_t_len(struct map_##key_type##_##value_type##_t *self) {\
     return self->size;\
 }\
@@ -187,3 +190,4 @@ void            map_##key_type##_##value_type##_t_clear(struct map_##key_type##_
 #define Map(key_type, value_type) map_##key_type##_##value_type##_t
 
 #endif // CSML_MAP_H
+

@@ -32,20 +32,20 @@ int main() {
     Pair(int, char) 	stacked_pair = stacked(Pair(int, char), 20, 'b');
 
     printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first_item,
-        heap_pair->second_item);
+        heap_pair->first,
+        heap_pair->second);
     printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first_item,
-        stacked_pair.second_item);
+        stacked_pair.first,
+        stacked_pair.second);
 
     printf("Now swap them: \n");
     heap_pair->swap(heap_pair, &stacked_pair);
     printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first_item,
-        heap_pair->second_item);
+        heap_pair->first,
+        heap_pair->second);
     printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first_item,
-        stacked_pair.second_item);
+        stacked_pair.first,
+        stacked_pair.second);
 
     // delete the pair allocated on the heap
     delete(heap_pair);
