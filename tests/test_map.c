@@ -25,9 +25,13 @@
 impl_pair(int, int, char, char);
 impl_map(int, int, char, char);
 
+bool cmp_key(int i, int j) {
+    return i == j;
+}
+
 int main() {
     // new stack on the heap
-    Map(int, char)     *heap_pair =   new(Map(int, char), 10, 'a');
+    Map(int, char)     *heap_map =   new(Map(int, char), cmp_key);
     // new stack on the stack
     // Map(int, char)     stacked_pair = stacked(Pair(int, char), 20, 'b');
 
