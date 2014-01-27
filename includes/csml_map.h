@@ -27,6 +27,8 @@
 #include <string.h>     // memcpy
 #include <csml.h>
 
+#define map(key_type, value_type) map_##key_type##_##value_type##_t
+
 #define impl_map(key_type, Key_T, value_type, T)\
 \
 impl_pair(inner_map_##key_type, Key_T, inner_map_##value_type, T);\
@@ -36,34 +38,34 @@ struct item_map_##key_type##_##value_type##_t {\
     struct item_map_##key_type##_##value_type##_t       *next;\
 } item_map_##key_type##_##value_type##_t;\
 \
-typedef struct map_##key_type##_##value_type##_t {\
-    T               *(*at)(struct map_##key_type##_##value_type##_t *self, Key_T key);\
-    bool            (*insert)(struct map_##key_type##_##value_type##_t *self, Key_T key, T value);\
-    bool            (*remove)(struct map_##key_type##_##value_type##_t *self, Key_T key);\
-    bool            (*is_empty)(struct map_##key_type##_##value_type##_t *self);\
-    unsigned int    (*len)(struct map_##key_type##_##value_type##_t *self);\
-    bool            (*free)(struct map_##key_type##_##value_type##_t *self);\
-    void            (*clear)(struct map_##key_type##_##value_type##_t *self);\
+typedef struct map(key_type, value_type) {\
+    T               *(*at)(struct map(key_type, value_type) *self, Key_T key);\
+    bool            (*insert)(struct map(key_type, value_type) *self, Key_T key, T value);\
+    bool            (*remove)(struct map(key_type, value_type) *self, Key_T key);\
+    bool            (*is_empty)(struct map(key_type, value_type) *self);\
+    unsigned int    (*len)(struct map(key_type, value_type) *self);\
+    bool            (*free)(struct map(key_type, value_type) *self);\
+    void            (*clear)(struct map(key_type, value_type) *self);\
     \
     struct item_map_##key_type##_##value_type##_t       *first_item;\
     int                                                 size;\
     bool (*cmp_key_func)(Key_T k1, Key_T k2);\
-} map_##key_type##_##value_type##_t;\
+} map(key_type, value_type);\
 \
-void            map_##key_type##_##value_type##_t_initialize(struct map_##key_type##_##value_type##_t *self, bool type);\
-bool            map_##key_type##_##value_type##_t_delete_heap(struct map_##key_type##_##value_type##_t *self);\
-bool            map_##key_type##_##value_type##_t_delete_stacked(struct map_##key_type##_##value_type##_t *self);\
-void            map_##key_type##_##value_type##_t_delete_in(struct map_##key_type##_##value_type##_t *self);\
+void            map_##key_type##_##value_type##_t_initialize(struct map(key_type, value_type) *self, bool type);\
+bool            map_##key_type##_##value_type##_t_delete_heap(struct map(key_type, value_type) *self);\
+bool            map_##key_type##_##value_type##_t_delete_stacked(struct map(key_type, value_type) *self);\
+void            map_##key_type##_##value_type##_t_delete_in(struct map(key_type, value_type) *self);\
 \
-T               *map_##key_type##_##value_type##_t_at(struct map_##key_type##_##value_type##_t *self, Key_T key);\
-bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##_##value_type##_t *self, Key_T key, T value);\
-bool            map_##key_type##_##value_type##_t_remove(struct map_##key_type##_##value_type##_t *self, Key_T key);\
-bool            map_##key_type##_##value_type##_t_is_empty(struct map_##key_type##_##value_type##_t *self);\
-unsigned int    map_##key_type##_##value_type##_t_len(struct map_##key_type##_##value_type##_t *self);\
-void            map_##key_type##_##value_type##_t_clear(struct map_##key_type##_##value_type##_t *self);\
+T               *map_##key_type##_##value_type##_t_at(struct map(key_type, value_type) *self, Key_T key);\
+bool            map_##key_type##_##value_type##_t_insert(struct map(key_type, value_type) *self, Key_T key, T value);\
+bool            map_##key_type##_##value_type##_t_remove(struct map(key_type, value_type) *self, Key_T key);\
+bool            map_##key_type##_##value_type##_t_is_empty(struct map(key_type, value_type) *self);\
+unsigned int    map_##key_type##_##value_type##_t_len(struct map(key_type, value_type) *self);\
+void            map_##key_type##_##value_type##_t_clear(struct map(key_type, value_type) *self);\
 \
-map_##key_type##_##value_type##_t *new_map_##key_type##_##value_type##_t(bool (*cmp_func)(Key_T k1, Key_T k2)) {\
-    map_##key_type##_##value_type##_t *self = malloc(sizeof(map_##key_type##_##value_type##_t));\
+map(key_type, value_type) *new_map_##key_type##_##value_type##_t(bool (*cmp_func)(Key_T k1, Key_T k2)) {\
+    map(key_type, value_type) *self = malloc(sizeof(map(key_type, value_type)));\
     if (self) {\
         map_##key_type##_##value_type##_t_initialize(self, true);\
         self->cmp_key_func = cmp_func;\
@@ -71,14 +73,14 @@ map_##key_type##_##value_type##_t *new_map_##key_type##_##value_type##_t(bool (*
     return self;\
 }\
 \
-map_##key_type##_##value_type##_t stacked_map_##key_type##_##value_type##_t(bool (*cmp_func)(Key_T k1, Key_T k2)) {\
-    map_##key_type##_##value_type##_t self;\
+map(key_type, value_type) stacked_map_##key_type##_##value_type##_t(bool (*cmp_func)(Key_T k1, Key_T k2)) {\
+    map(key_type, value_type) self;\
     map_##key_type##_##value_type##_t_initialize(&self, false);\
     self.cmp_key_func = cmp_func;\
     return self;\
 }\
 \
-void map_##key_type##_##value_type##_t_initialize(struct map_##key_type##_##value_type##_t *self, bool type) {\
+void map_##key_type##_##value_type##_t_initialize(struct map(key_type, value_type) *self, bool type) {\
     self->size = 0;\
     self->first_item = 0;\
     self->at = map_##key_type##_##value_type##_t_at;\
@@ -93,17 +95,17 @@ void map_##key_type##_##value_type##_t_initialize(struct map_##key_type##_##valu
     }\
 }\
 \
-bool            map_##key_type##_##value_type##_t_delete_heap(struct map_##key_type##_##value_type##_t *self) {\
+bool            map_##key_type##_##value_type##_t_delete_heap(struct map(key_type, value_type) *self) {\
     map_##key_type##_##value_type##_t_delete_in(self);\
     return true;\
 }\
 \
-bool            map_##key_type##_##value_type##_t_delete_stacked(struct map_##key_type##_##value_type##_t *self) {\
+bool            map_##key_type##_##value_type##_t_delete_stacked(struct map(key_type, value_type) *self) {\
     map_##key_type##_##value_type##_t_delete_in(self);\
     return false;\
 }\
 \
-void            map_##key_type##_##value_type##_t_delete_in(struct map_##key_type##_##value_type##_t *self) {\
+void            map_##key_type##_##value_type##_t_delete_in(struct map(key_type, value_type) *self) {\
     struct item_map_##key_type##_##value_type##_t *tmp;\
     while (self->first_item) {\
         tmp = self->first_item->next;\
@@ -112,7 +114,7 @@ void            map_##key_type##_##value_type##_t_delete_in(struct map_##key_typ
     }\
 }\
 \
-T               *map_##key_type##_##value_type##_t_at(struct map_##key_type##_##value_type##_t *self, Key_T key) {\
+T               *map_##key_type##_##value_type##_t_at(struct map(key_type, value_type) *self, Key_T key) {\
     T *return_value = 0;\
     struct item_map_##key_type##_##value_type##_t *tmp = self->first_item;\
     while (tmp && !return_value) {\
@@ -124,7 +126,7 @@ T               *map_##key_type##_##value_type##_t_at(struct map_##key_type##_##
     }\
     return return_value;\
 }\
-bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##_##value_type##_t *self, Key_T key, T value) {\
+bool            map_##key_type##_##value_type##_t_insert(struct map(key_type, value_type) *self, Key_T key, T value) {\
     bool found_key = false;\
     struct item_map_##key_type##_##value_type##_t *tmp = self->first_item;\
     while (tmp && !found_key) {\
@@ -147,7 +149,7 @@ bool            map_##key_type##_##value_type##_t_insert(struct map_##key_type##
     return !found_key ? true : false;\
 }\
 \
-bool            map_##key_type##_##value_type##_t_remove(struct map_##key_type##_##value_type##_t *self, Key_T key) {\
+bool            map_##key_type##_##value_type##_t_remove(struct map(key_type, value_type) *self, Key_T key) {\
     bool found_key = false;\
     struct item_map_##key_type##_##value_type##_t *first = self->first_item;\
     if (self->size == 0) {\
@@ -174,20 +176,18 @@ bool            map_##key_type##_##value_type##_t_remove(struct map_##key_type##
     return found_key;\
 }\
 \
-bool            map_##key_type##_##value_type##_t_is_empty(struct map_##key_type##_##value_type##_t *self) {\
+bool            map_##key_type##_##value_type##_t_is_empty(struct map(key_type, value_type) *self) {\
     return self->size == 0;\
 }\
 \
-unsigned int    map_##key_type##_##value_type##_t_len(struct map_##key_type##_##value_type##_t *self) {\
+unsigned int    map_##key_type##_##value_type##_t_len(struct map(key_type, value_type) *self) {\
     return self->size;\
 }\
 \
-void            map_##key_type##_##value_type##_t_clear(struct map_##key_type##_##value_type##_t *self) {\
+void            map_##key_type##_##value_type##_t_clear(struct map(key_type, value_type) *self) {\
     map_##key_type##_##value_type##_t_delete_in(self);\
     self->first_item = 0;\
 }\
-
-#define map(key_type, value_type) map_##key_type##_##value_type##_t
 
 #endif // CSML_MAP_H
 

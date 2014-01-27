@@ -26,38 +26,40 @@
 #include <stdlib.h>     // malloc, free
 #include <string.h>     // memcpy
 
+#define pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t
+
 #define impl_pair(type_name1, T1, type_name2, T2)\
 \
-typedef struct pair_##type_name1##_##type_name2##_t {\
+typedef struct pair(type_name1, type_name2) {\
     T1 first;\
     T2 second;\
-    void    (*swap)(struct pair_##type_name1##_##type_name2##_t *self, \
+    void    (*swap)(struct pair(type_name1, type_name2) *self, \
         struct pair_##type_name1##_##type_name2##_t *other);\
-    bool    (*free)(struct pair_##type_name1##_##type_name2##_t *self);\
-} pair_##type_name1##_##type_name2##_t;\
+    bool    (*free)(struct pair(type_name1, type_name2) *self);\
+} pair(type_name1, type_name2);\
 \
-void    pair_##type_name1##_##type_name2##_t_initialize(struct pair_##type_name1##_##type_name2##_t *self, \
+void    pair_##type_name1##_##type_name2##_t_initialize(struct pair(type_name1, type_name2) *self, \
     T1 first, T2 second, bool type);\
-bool    pair_##type_name1##_##type_name2##_t_delete_heap(struct pair_##type_name1##_##type_name2##_t *self);\
-bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair_##type_name1##_##type_name2##_t *self);\
-void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##type_name2##_t *self, \
-    struct pair_##type_name1##_##type_name2##_t *other);\
+bool    pair_##type_name1##_##type_name2##_t_delete_heap(struct pair(type_name1, type_name2) *self);\
+bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair(type_name1, type_name2) *self);\
+void    pair_##type_name1##_##type_name2##_t_swap(struct pair(type_name1, type_name2) *self, \
+    struct pair(type_name1, type_name2) *other);\
 \
-pair_##type_name1##_##type_name2##_t *new_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
-    pair_##type_name1##_##type_name2##_t *self = malloc(sizeof(pair_##type_name1##_##type_name2##_t));\
+pair(type_name1, type_name2) *new_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
+    pair(type_name1, type_name2) *self = malloc(sizeof(pair(type_name1, type_name2)));\
     if (self) {\
         pair_##type_name1##_##type_name2##_t_initialize(self, first_item, second_item, true);\
     }\
     return self;\
 }\
 \
-pair_##type_name1##_##type_name2##_t stacked_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
-    pair_##type_name1##_##type_name2##_t self;\
+pair(type_name1, type_name2) stacked_pair_##type_name1##_##type_name2##_t(T1 first_item, T2 second_item) {\
+    pair(type_name1, type_name2) self;\
     pair_##type_name1##_##type_name2##_t_initialize(&self, first_item, second_item, false);\
     return self;\
 }\
 \
-void pair_##type_name1##_##type_name2##_t_initialize(struct pair_##type_name1##_##type_name2##_t *self, \
+void pair_##type_name1##_##type_name2##_t_initialize(struct pair(type_name1, type_name2) *self, \
     T1 first_item, T2 second_item, bool type) {\
     self->first =  first_item;\
     self->second = second_item;\
@@ -69,16 +71,16 @@ void pair_##type_name1##_##type_name2##_t_initialize(struct pair_##type_name1##_
     }\
 }\
 \
-bool    pair_##type_name1##_##type_name2##_t_delete_heap(struct pair_##type_name1##_##type_name2##_t *self) {\
+bool    pair_##type_name1##_##type_name2##_t_delete_heap(struct pair(type_name1, type_name2) *self) {\
     return true;\
 }\
 \
-bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair_##type_name1##_##type_name2##_t *self) {\
+bool    pair_##type_name1##_##type_name2##_t_delete_stacked(struct pair(type_name1, type_name2) *self) {\
     return false;\
 }\
 \
-void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##type_name2##_t *self, \
-    struct pair_##type_name1##_##type_name2##_t *other) {\
+void    pair_##type_name1##_##type_name2##_t_swap(struct pair(type_name1, type_name2) *self, \
+    struct pair(type_name1, type_name2) *other) {\
     T1 tmp_first =     self->first;\
     T2 tmp_secomd =    self->second;\
     self->first =      other->first;\
@@ -86,7 +88,5 @@ void    pair_##type_name1##_##type_name2##_t_swap(struct pair_##type_name1##_##t
     other->first =     tmp_first;\
     other->second =    tmp_secomd;\
 }
-
-#define pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t
 
 #endif // CSML_PAIR_H

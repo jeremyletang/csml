@@ -25,6 +25,8 @@
 #include <stdbool.h>    // c99 bool
 #include <stdlib.h>     // malloc, free
 
+#define stack(type_name) stack_##type_name##_t
+
 #define impl_stack(type_name, T)\
 \
 struct item_stack_##type_name##_t {\
@@ -32,44 +34,44 @@ struct item_stack_##type_name##_t {\
     struct item_stack_##type_name##_t   *next;\
 } item_stack_##type_name##_t;\
 \
-typedef struct stack_##type_name##_t {\
-    T               *(*top)(struct stack_##type_name##_t *self);\
-    void            (*pop)(struct stack_##type_name##_t *self);\
-    bool            (*push)(struct stack_##type_name##_t *self, T item);\
-    bool            (*is_empty)(struct stack_##type_name##_t *self);\
-    unsigned int    (*len)(struct stack_##type_name##_t *self);\
-    bool            (*free)(struct stack_##type_name##_t *self);\
+typedef struct stack(type_name) {\
+    T               *(*top)(struct stack(type_name) *self);\
+    void            (*pop)(struct stack(type_name) *self);\
+    bool            (*push)(struct stack(type_name) *self, T item);\
+    bool            (*is_empty)(struct stack(type_name) *self);\
+    unsigned int    (*len)(struct stack(type_name) *self);\
+    bool            (*free)(struct stack(type_name) *self);\
     \
     struct item_stack_##type_name##_t   *top_item;\
     int                                 size;\
-} stack_##type_name##_t;\
+} stack(type_name);\
 \
-void            stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type);\
-bool            stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self);\
-bool            stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self);\
-void            stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self);\
+void            stack_##type_name##_t_initialize(struct stack(type_name) *self, bool type);\
+bool            stack_##type_name##_t_delete_heap(struct stack(type_name) *self);\
+bool            stack_##type_name##_t_delete_stacked(struct stack(type_name) *self);\
+void            stack_##type_name##_t_delete_in(struct stack(type_name) *self);\
 \
-T               *stack_##type_name##_t_top(struct stack_##type_name##_t *self);\
-void            stack_##type_name##_t_pop(struct stack_##type_name##_t *self);\
-bool            stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item);\
-bool            stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self);\
-unsigned int    stack_##type_name##_t_len(struct stack_##type_name##_t *self);\
+T               *stack_##type_name##_t_top(struct stack(type_name) *self);\
+void            stack_##type_name##_t_pop(struct stack(type_name) *self);\
+bool            stack_##type_name##_t_push(struct stack(type_name) *self, T item);\
+bool            stack_##type_name##_t_is_empty(struct stack(type_name) *self);\
+unsigned int    stack_##type_name##_t_len(struct stack(type_name) *self);\
 \
-stack_##type_name##_t *new_stack_##type_name##_t() {\
-    stack_##type_name##_t *self = malloc(sizeof(stack_##type_name##_t));\
+stack(type_name) *new_stack_##type_name##_t() {\
+    stack_##type_name##_t *self = malloc(sizeof(stack(type_name)));\
     if (self) {\
         stack_##type_name##_t_initialize(self, true);\
     }\
     return self;\
 }\
 \
-stack_##type_name##_t stacked_stack_##type_name##_t() {\
+stack(type_name) stacked_stack_##type_name##_t() {\
     stack_##type_name##_t self;\
     stack_##type_name##_t_initialize(&self, false);\
     return self;\
 }\
 \
-void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool type) {\
+void stack_##type_name##_t_initialize(struct stack(type_name) *self, bool type) {\
     self->size = 0;\
     self->top_item = 0;\
     self->len = stack_##type_name##_t_len;\
@@ -84,7 +86,7 @@ void stack_##type_name##_t_initialize(struct stack_##type_name##_t *self, bool t
     }\
 }\
 \
-void stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self) {\
+void stack_##type_name##_t_delete_in(struct stack(type_name) *self) {\
     struct item_stack_##type_name##_t *tmp;\
     while (self->top_item) {\
         tmp = self->top_item->next;\
@@ -93,17 +95,17 @@ void stack_##type_name##_t_delete_in(struct stack_##type_name##_t *self) {\
     }\
 }\
 \
-bool stack_##type_name##_t_delete_heap(struct stack_##type_name##_t *self) {\
+bool stack_##type_name##_t_delete_heap(struct stack(type_name) *self) {\
     stack_##type_name##_t_delete_in(self);\
     return true;\
 }\
 \
-bool stack_##type_name##_t_delete_stacked(struct stack_##type_name##_t *self) {\
+bool stack_##type_name##_t_delete_stacked(struct stack(type_name) *self) {\
     stack_##type_name##_t_delete_in(self);\
     return false;\
 }\
 \
-bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
+bool stack_##type_name##_t_push(struct stack(type_name) *self, T item) {\
     bool return_value = false;\
     struct item_stack_##type_name##_t *tmp = malloc(sizeof(item_stack_##type_name##_t));\
     if (tmp) {\
@@ -116,11 +118,11 @@ bool stack_##type_name##_t_push(struct stack_##type_name##_t *self, T item) {\
     return return_value;\
 }\
 \
-T *stack_##type_name##_t_top(struct stack_##type_name##_t *self) {\
+T *stack_##type_name##_t_top(struct stack(type_name) *self) {\
     return &self->top_item->item;\
 }\
 \
-void stack_##type_name##_t_pop(struct stack_##type_name##_t *self) {\
+void stack_##type_name##_t_pop(struct stack(type_name) *self) {\
     if (self->top_item) {\
         struct item_stack_##type_name##_t *tmp = self->top_item;\
         self->top_item = self->top_item->next;\
@@ -129,15 +131,12 @@ void stack_##type_name##_t_pop(struct stack_##type_name##_t *self) {\
     }\
 }\
 \
-bool stack_##type_name##_t_is_empty(struct stack_##type_name##_t *self) {\
+bool stack_##type_name##_t_is_empty(struct stack(type_name) *self) {\
     return self->size == 0;\
 }\
 \
-unsigned int stack_##type_name##_t_len(struct stack_##type_name##_t *self) {\
+unsigned int stack_##type_name##_t_len(struct stack(type_name) *self) {\
     return self->size;\
 }
-
-
-#define stack(type_name) stack_##type_name##_t
 
 #endif // CSML_STACK_H
