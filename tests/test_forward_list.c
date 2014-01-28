@@ -23,13 +23,26 @@
 #include "csml.h"
 
 // call the macros with the givens types to implement a stack for this type.
-impl_queue(int, int);
+impl_flist(int, int);
 
 int main() {
 	// new queue on the heap
-    queue(int) 	*heap_queue =   new(queue(int));
+    forward_list(int) 	*heap_list =   new(forward_list(int));
     // // new stack on the stack
-    queue(int) 	stacked_queue = stacked(queue(int));
+    forward_list(int) 	stacked_list = stacked(forward_list(int));
+
+    heap_list->push_front(heap_list, 42);
+    heap_list->push_front(heap_list, 84);
+    heap_list->push_front(heap_list, 21);
+    heap_list->push_front(heap_list, 12);
+    heap_list->push_front(heap_list, 128);
+    heap_list->push_front(heap_list, 1024);
+    printf("Heap list front: %d\n", *heap_list->front(heap_list));
+    // heap_list->pop_front(heap_list);
+    // printf("Heap list front: %d\n", *heap_list->front(heap_list));
+    for (flist_iterator(int) *it = heap_list->begin(heap_list); !equals(it, heap_list->end(heap_list)); it = next(it)) {
+        printf("list item: %d\n", *get(it));
+    }
 
     // // use heap stack
     // printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
@@ -48,8 +61,8 @@ int main() {
     // printf("Stacked Stack top value after a push: %d\n", *stacked_stack.top(&stacked_stack));
 
     // // delete the stack allocated on the heap
-    delete(heap_queue);
+    delete(heap_list);
     // // delete the stack allocated on the stack...
-    delete(&stacked_queue);
+    delete(&stacked_list);
     return 0;
 }

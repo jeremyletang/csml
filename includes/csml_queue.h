@@ -138,6 +138,7 @@ void queue_##type_name##_t_pop(struct queue(type_name) *self) {\
         struct item_queue_##type_name##_t *tmp = self->front_item;\
         self->front_item = tmp->next;\
         free(tmp);\
+        self->size -= 1;\
     }\
 }\
 \

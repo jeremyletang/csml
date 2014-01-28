@@ -158,6 +158,7 @@ bool            map_##key_type##_##value_type##_t_remove(struct map(key_type, va
         self->first_item = self->first_item->next;\
         free(first);\
         found_key = true;\
+        self->size -= 1;\
     } else {\
         struct item_map_##key_type##_##value_type##_t *second = self->first_item->next;\
         while (second && !found_key) {\
@@ -171,6 +172,7 @@ bool            map_##key_type##_##value_type##_t_remove(struct map(key_type, va
         if (found_key) {\
             first->next = second->next;\
             free(second);\
+            self->size -= 1;\
         }\
     }\
     return found_key;\

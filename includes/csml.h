@@ -29,6 +29,8 @@
 #include "csml_priority_queue.h"
 #include "csml_string.h"
 
+/* Objects allocators and destructors */
+
 // Heap allocator constructor
 #define new(complet_type_name, ...)      _new(new_, complet_type_name, __VA_ARGS__)
 #define _new(arg1, arg2, ...)            arg1##arg2(__VA_ARGS__)
@@ -43,3 +45,15 @@ if ((var) != 0) {\
     if ((var)->free(var) == true)\
         free(var);\
 }                                                                                                                                                                                              
+
+
+/* Iterators accesors */
+
+// Get the value of the iterator
+#define get(it) &(it)->item
+
+// compare two iterators
+#define equals(it1, it2) (it1 == it2)
+
+// Return the next iterator
+#define next(it) (it)->next
