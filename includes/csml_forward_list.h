@@ -199,7 +199,4 @@ unsigned int                forward_list_##type_name##_t_len(struct forward_list
     return self->size;\
 }\
 
-
-#define push_front(ptr, var) ptr->push_front(ptr, var)
-
 #endif // CSML_FORWARD_LIST_H

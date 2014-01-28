@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include "csml.h"
+#include "csml_method_macro.h"
 
 impl_pair(int, int, char, char);
 impl_map(int, int, char, char);
@@ -35,10 +36,10 @@ int main() {
     // new stack on the stack
     map(int, char)     stacked_map = stacked(map(int, char), cmp_key);
 
-    heap_map->insert(heap_map, 1, 'b');
-    heap_map->insert(heap_map, 2, 'c');
-    heap_map->insert(heap_map, 3, 'f');
-    printf("Heap map at 2: %c\n", *heap_map->at(heap_map, 2));
+    insert(heap_map, 1, 'b');
+    insert(heap_map, 2, 'c');
+    insert(heap_map, 3, 'f');
+    printf("Heap map at 2: %c\n", *at(heap_map, 2));
 
     // delete the map allocated on the heap
     delete(heap_map);

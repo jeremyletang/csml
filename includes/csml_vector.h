@@ -145,7 +145,7 @@ T               *vector_##type_name##_t_at(struct vector(type_name) *self, unsig
 bool            vector_##type_name##_t_push_back(struct vector(type_name) *self, T item) {\
     bool return_value = true;\
     if (self->size == self->cap) {\
-        return_value = self->resize(self, self->cap * 2);\
+        return_value = vector_##type_name##_t_resize(self, self->cap * 2);\
     }\
     if (return_value) {\
         self->stored_data[self->size] = item;\

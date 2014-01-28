@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include "csml.h"
+#include "csml_method_macro.h"
 
 // call the macros with the givens types to implement a stack for this type.
 impl_pair(int, int, char, char);
@@ -39,7 +40,7 @@ int main() {
         stacked_pair.second);
 
     printf("Now swap them: \n");
-    heap_pair->swap(heap_pair, &stacked_pair);
+    swap(heap_pair, &stacked_pair);
     printf("Heap pair = first_item: %d / second_item: %c \n", 
         heap_pair->first,
         heap_pair->second);

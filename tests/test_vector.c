@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include "csml.h"
+#include "csml_method_macro.h"
 
 // call the macros with the givens types to implement a stack for this type.
 impl_vector(int, int);
@@ -37,37 +38,37 @@ int main() {
     vector(int) 	stacked_vector = stacked(vector(int), 20);
 
     printf("Heap vector len / capacity: %d / %d\n", 
-        heap_vector->len(heap_vector), 
-        heap_vector->capacity(heap_vector));
+        len(heap_vector), 
+        capacity(heap_vector));
     printf("Stacked vector len / capacity: %d / %d\n", 
-        stacked_vector.len(&stacked_vector), 
-        stacked_vector.capacity(&stacked_vector));
+        len(&stacked_vector), 
+        capacity(&stacked_vector));
 
-    heap_vector->push_back(heap_vector, 42);
+    push_back(heap_vector, 42);
     printf("Heap vector front / back: %d / %d\n", 
-        *heap_vector->front(heap_vector), 
-        *heap_vector->back(heap_vector));
-    heap_vector->push_back(heap_vector, 21);
+        *front(heap_vector), 
+        *back(heap_vector));
+    push_back(heap_vector, 21);
     printf("Heap vector front / back: %d / %d\n", 
-        *heap_vector->front(heap_vector), 
-        *heap_vector->back(heap_vector));
+        *front(heap_vector), 
+        *back(heap_vector));
     printf("Heap vector len / capacity: %d / %d\n", 
-        heap_vector->len(heap_vector), 
-        heap_vector->capacity(heap_vector));
-    heap_vector->push_back(heap_vector, 84);
-    heap_vector->for_each(heap_vector, increment_of_ten, 0);
+        len(heap_vector), 
+        capacity(heap_vector));
+    push_back(heap_vector, 84);
+    for_each(heap_vector, increment_of_ten, 0);
     printf("After call to for_each, item1: %d, item2: %d, item3: %d\n", 
-        *heap_vector->at(heap_vector, 0),
-        *heap_vector->at(heap_vector, 1),
-        *heap_vector->at(heap_vector, 2));
-    heap_vector->pop_back(heap_vector);
+        *at(heap_vector, 0),
+        *at(heap_vector, 1),
+        *at(heap_vector, 2));
+    pop_back(heap_vector);
     printf("Heap vector front / back: %d / %d\n", 
-        *heap_vector->front(heap_vector), 
-        *heap_vector->back(heap_vector));
+        *front(heap_vector), 
+        *back(heap_vector));
     printf("Heap vector len / capacity: %d / %d\n", 
-        heap_vector->len(heap_vector), 
-        heap_vector->capacity(heap_vector));
-    printf("Heap vector at index 1: %d\n", *heap_vector->at(heap_vector, 1));
+        len(heap_vector), 
+        capacity(heap_vector));
+    printf("Heap vector at index 1: %d\n", *at(heap_vector, 1));
 
     // delete the stack allocated on the heap
     delete(heap_vector);

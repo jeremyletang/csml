@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include "csml.h"
+#include "csml_method_macro.h"
 
 // call the macros with the givens types to implement a stack for this type.
 impl_flist(int, int);
@@ -37,11 +38,11 @@ int main() {
     push_front(heap_list, 12);
     push_front(heap_list, 128);
     push_front(heap_list, 1024);
-    printf("Heap list front: %d\n", *heap_list->front(heap_list));
+    printf("Heap list front: %d\n", *front(heap_list));
     // heap_list->pop_front(heap_list);
     // printf("Heap list front: %d\n", *heap_list->front(heap_list));
-    flist_iterator(int) *it = heap_list->begin(heap_list);
-    for (;!equals(it, heap_list->end(heap_list)); it = next(it)) {
+    flist_iterator(int) *it = begin(heap_list);
+    for (;!equals(it, end(heap_list)); it = next(it)) {
         printf("list item: %d\n", *get(it));
     }
 
