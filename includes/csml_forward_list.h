@@ -1,26 +1,30 @@
-// The MIT License (MIT)
-// 
-// Copyright (c) 2014 Jeremy Letang (letang.jeremy@gmail.com)
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of
-// this software and associated documentation files (the "Software"), to deal in
-// the Software without restriction, including without limitation the rights to
-// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software is furnished to do so,
-// subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+* The MIT License (MIT)
+* 
+* Copyright (c) 2014 Jeremy Letang (letang.jeremy@gmail.com)
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy of
+* this software and associated documentation files (the "Software"), to deal in
+* the Software without restriction, including without limitation the rights to
+* use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+* the Software, and to permit persons to whom the Software is furnished to do so,
+* subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+* FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+* COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+* IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+* CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
 
 #ifndef CSML_FORWARD_LIST_H
 #define CSML_FORWARD_LIST_H
+
+#include "csml_memory.h"
 
 #define forward_list(type_name) forward_list_##type_name##_t
 #define flist_iterator(type_name) forward_list_iterator_##type_name##_t
@@ -39,9 +43,12 @@ typedef struct forward_list(type_name) {\
     struct flist_iterator(type_name)    *(*begin)(struct forward_list(type_name) *self);\
     struct flist_iterator(type_name)    *(*end)(struct forward_list(type_name) *self);\
     bool                        (*is_empty)(struct forward_list(type_name) *self);\
-    struct flist_iterator(type_name)    *(*insert_after)(struct forward_list(type_name) *self, struct flist_iterator(type_name) *it, T new_item);\
-    struct flist_iterator(type_name)    *(*erase_after)(struct forward_list(type_name) *self, struct flist_iterator(type_name) *it);\
-    struct flist_iterator(type_name)    *(*erase_in)(struct forward_list(type_name) *self, struct flist_iterator(type_name) *begin, \
+    struct flist_iterator(type_name)    *(*insert_after)(struct forward_list(type_name) *self, \
+        struct flist_iterator(type_name) *it, T new_item);\
+    struct flist_iterator(type_name)    *(*erase_after)(struct forward_list(type_name) *self, \
+        struct flist_iterator(type_name) *it);\
+    struct flist_iterator(type_name)    *(*erase_in)(struct forward_list(type_name) *self, \
+        struct flist_iterator(type_name) *begin, \
         struct flist_iterator(type_name) *end);\
     void                        (*remove)(struct forward_list(type_name) *self, T rm_item);\
     void                        (*remove_if)(struct forward_list(type_name) *self, bool (*predicate)(T *item));\
@@ -71,7 +78,8 @@ struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_after(st
 struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_in(struct forward_list(type_name) *self, \
     struct flist_iterator(type_name) *it1, flist_iterator(type_name) *it2);\
 void                        forward_list_##type_name##_t_remove(struct forward_list(type_name) *self, T rm_item);\
-void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, bool (*predicate)(T *item));\
+void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, \
+    bool (*predicate)(T *item));\
 unsigned int                forward_list_##type_name##_t_len(struct forward_list(type_name) *self);\
 \
 forward_list(type_name) *new_forward_list_##type_name##_t() {\
@@ -191,7 +199,8 @@ void                        forward_list_##type_name##_t_remove(struct forward_l
     \
 }\
 \
-void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, bool (*predicate)(T *item)) {\
+void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, \
+    bool (*predicate)(T *item)) {\
     \
 }\
 \
@@ -199,4 +208,4 @@ unsigned int                forward_list_##type_name##_t_len(struct forward_list
     return self->size;\
 }\
 
-#endif // CSML_FORWARD_LIST_H
+#endif /* CSML_FORWARD_LIST_H */
