@@ -31,16 +31,17 @@ int main() {
     // // new stack on the stack
     forward_list(int) 	stacked_list = stacked(forward_list(int));
 
-    heap_list->push_front(heap_list, 42);
-    heap_list->push_front(heap_list, 84);
-    heap_list->push_front(heap_list, 21);
-    heap_list->push_front(heap_list, 12);
-    heap_list->push_front(heap_list, 128);
-    heap_list->push_front(heap_list, 1024);
+    push_front(heap_list, 42);
+    push_front(heap_list, 84);
+    push_front(heap_list, 21);
+    push_front(heap_list, 12);
+    push_front(heap_list, 128);
+    push_front(heap_list, 1024);
     printf("Heap list front: %d\n", *heap_list->front(heap_list));
     // heap_list->pop_front(heap_list);
     // printf("Heap list front: %d\n", *heap_list->front(heap_list));
-    for (flist_iterator(int) *it = heap_list->begin(heap_list); !equals(it, heap_list->end(heap_list)); it = next(it)) {
+    flist_iterator(int) *it = heap_list->begin(heap_list);
+    for (;!equals(it, heap_list->end(heap_list)); it = next(it)) {
         printf("list item: %d\n", *get(it));
     }
 

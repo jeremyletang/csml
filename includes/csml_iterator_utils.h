@@ -19,17 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "csml_memory.h"
-#include "csml_queue.h"
-#include "csml_stack.h"
-#include "csml_vector.h"
-#include "csml_map.h"
-#include "csml_pair.h"
-#include "csml_forward_list.h"
-#include "csml_list.h"
-#include "csml_priority_queue.h"
-#include "csml_string.h"
-#include "csml_iterator_utils.h"
+#ifndef CSML_ITERATOR_UTILS_H
+#define CSML_ITERATOR_UTILS_H
 
 /* Iterators accesors */
 
@@ -41,3 +32,5 @@
 
 // Return the next iterator
 #define next(it) (it)->next
+
+#endif // CSML_ITERATOR_UTILS_H

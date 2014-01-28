@@ -19,25 +19,24 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include "csml_memory.h"
-#include "csml_queue.h"
-#include "csml_stack.h"
-#include "csml_vector.h"
-#include "csml_map.h"
-#include "csml_pair.h"
-#include "csml_forward_list.h"
-#include "csml_list.h"
-#include "csml_priority_queue.h"
-#include "csml_string.h"
-#include "csml_iterator_utils.h"
+#ifndef CSML_MEMORY_H
+#define CSML_MEMORY_H
 
-/* Iterators accesors */
+/* Objects allocators and destructors */
 
-// Get the value of the iterator
-#define get(it) &(it)->item
+// On heap allocator constructor
+#define new(complet_type_name, ...)      _new(new_, complet_type_name, __VA_ARGS__)
+#define _new(arg1, arg2, ...)            arg1##arg2(__VA_ARGS__)
 
-// compare two iterators
-#define equals(it1, it2) (it1 == it2)
+// On stack constructor
+#define stacked(complet_type_name, ...)  _stacked(stacked_, complet_type_name, __VA_ARGS__)
+#define _stacked(arg1, arg2, ...)        arg1##arg2(__VA_ARGS__)
 
-// Return the next iterator
-#define next(it) (it)->next
+// Destructor for heap and stack object
+#define delete(var)\
+if ((var) != 0) {\
+    if ((var)->free(var) == true)\
+        free(var);\
+}
+
+#endif // CSML_MEMORY_H
