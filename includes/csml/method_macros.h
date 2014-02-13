@@ -21,8 +21,8 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef CSML_METHOD_MACRO_H
-#define CSML_METHOD_MACRO_H
+#ifndef CSML_METHOD_MACROS_H
+#define CSML_METHOD_MACROS_H
 
 #define push(ptr, var) 					(ptr)->push(ptr, var)
 #define top(ptr) 						(ptr)->top(ptr)

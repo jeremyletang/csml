@@ -27,8 +27,8 @@
 #include <stdbool.h>    /* c99 bool */
 #include <stdlib.h>     /* malloc, free */
 #include <string.h>     /* memcpy */
-#include "csml_memory.h"
-#include "csml_pair.h"
+#include "memory.h"
+#include "pair.h"
 
 #define map(key_type, value_type) map_##key_type##_##value_type##_t
 
@@ -195,4 +195,3 @@ void            map_##key_type##_##value_type##_t_clear(struct map(key_type, val
 }\
 
 #endif /* CSML_MAP_H */
-

@@ -24,7 +24,7 @@
 #ifndef CSML_FORWARD_LIST_H
 #define CSML_FORWARD_LIST_H
 
-#include "csml_memory.h"
+#include "memory.h"
 
 #define forward_list(type_name) forward_list_##type_name##_t
 #define flist_iterator(type_name) forward_list_iterator_##type_name##_t

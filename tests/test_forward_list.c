@@ -22,14 +22,15 @@
 */
 
 #include <stdio.h>
-#include "csml.h"
-#include "csml_method_macro.h"
+#include "csml/csml.h"
+#include "csml/method_macros.h"
 
 impl_flist(int, int);
+impl_flist(charptr, char*);
 
 int main() {
-    forward_list(int) 	*heap_list =   new(forward_list(int));
-    forward_list(int) 	stacked_list = create(forward_list(int));
+    forward_list(int) 	     *heap_list =   new(forward_list(int));
+    forward_list(charptr) 	 stacked_list = create(forward_list(charptr));
 
     push_front(heap_list, 42);
     push_front(heap_list, 84);
@@ -37,14 +38,25 @@ int main() {
     push_front(heap_list, 12);
     push_front(heap_list, 128);
     push_front(heap_list, 1024);
+    push_front(&stacked_list, " haha !");
+    push_front(&stacked_list, " world");
+    push_front(&stacked_list, "hello");
+
     printf("Heap list front: %d\n", *front(heap_list));
+    printf("Stacked list front: %s\n", *front(&stacked_list));
     /* heap_list->pop_front(heap_list);
     printf("Heap list front: %d\n", *heap_list->front(heap_list)); */
     flist_iterator(int) *it = begin(heap_list);
-    for (;!equals(it, end(heap_list)); it = next(it)) {
-        printf("list item: %d\n", *get(it));
+    for (;!equals(it, end(heap_list)); inc(it)) {
+        printf("Heap list item: %d\n", *get(it));
     }
 
+    flist_iterator(charptr) *it2 = begin(&stacked_list);
+    printf("Stacked list items: ");
+    for (;!equals(it2, end(&stacked_list)); inc(it2)) {
+        printf("%s", *get(it2));
+    }
+    printf("\n");
 
     delete(heap_list);
     delete(&stacked_list);

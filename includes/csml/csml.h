@@ -21,25 +21,25 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "csml_memory.h"
-#include "csml_queue.h"
-#include "csml_stack.h"
-#include "csml_vector.h"
-#include "csml_map.h"
-#include "csml_pair.h"
-#include "csml_forward_list.h"
-#include "csml_list.h"
-#include "csml_priority_queue.h"
-#include "csml_string.h"
-#include "csml_iterator_utils.h"
+#include "memory.h"
+#include "queue.h"
+#include "stack.h"
+#include "vector.h"
+#include "map.h"
+#include "pair.h"
+#include "forward_list.h"
+#include "list.h"
+#include "priority_queue.h"
+#include "string.h"
+#include "iterator_utils.h"
 
-/* Iterators accesors */
+// /* Iterators accesors */
 
-/* Get the value of the iterator */
-#define get(it) &(it)->item
+// /* Get the value of the iterator */
+// #define get(it) &(it)->item
 
-/* compare two iterators */
-#define equals(it1, it2) (it1 == it2)
+//  compare two iterators 
+// #define equals(it1, it2) (it1 == it2)
 
-/* Return the next iterator */
-#define next(it) (it)->next
+// /* Return the next iterator */
+// #define next(it) (it)->next

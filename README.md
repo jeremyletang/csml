@@ -12,7 +12,7 @@ int main() {
 	// new stack on the heap
     Stack(int) 	*heap_stack = new(Stack(int));
     // new stack on the stack
-    Stack(int) 	stacked_stack = stacked(Stack(int));
+    Stack(int) 	stacked_stack = create(Stack(int));
 
     // use heap stack
     printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));

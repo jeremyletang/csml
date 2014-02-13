@@ -21,39 +21,24 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdio.h>
-#include "csml/pair.h"
-#include "csml/method_macros.h"
+#ifndef CSML_ITERATOR_UTILS_H
+#define CSML_ITERATOR_UTILS_H
 
-/* call the macros with the givens types to implement a stack for this type. */
-impl_pair(int, int, char, char);
+/* Iterators accesors */
 
-int main() {
-	/* new stack on the heap */
-    pair(int, char) 	*heap_pair =   new(pair(int, char), 10, 'a');
-    /* new stack on the stack */
-    pair(int, char) 	stacked_pair = create(pair(int, char), 20, 'b');
+/* Get the value of the iterator */
+#define get(it) &(it)->item
 
-    printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first,
-        heap_pair->second);
-    printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first,
-        stacked_pair.second);
+/* compare two iterators */
+#define equals(it1, it2) (it1 == it2)
 
-    printf("Now swap them: \n");
-    swap(heap_pair, &stacked_pair);
-    printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first,
-        heap_pair->second);
-    printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first,
-        stacked_pair.second);
+/* Return the next iterator */
+#define next(it) (it)->next
 
-    /* delete the pair allocated on the heap */
-    delete(heap_pair);
-    /* delete the pair allocated on the stack... */
-    delete(&stacked_pair);
+/* Increment the iterator, like ++it in C++ */
+#define inc(it) (it) = (it)->next
 
-    return 0;
-}
+/* decrement the iterator, like --it in C++ */
+#define dec(it) (it) = (it)->prev
+
+#endif /* CSML_ITERATOR_UTILS_H */

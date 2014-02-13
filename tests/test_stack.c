@@ -22,8 +22,8 @@
 */
 
 #include <stdio.h>
-#include "csml_stack.h"
-#include "csml_method_macro.h"
+#include "csml/stack.h"
+#include "csml/method_macros.h"
 
 /* call the macros with the givens types to implement a stack for this type. */
 impl_stack(int, int);

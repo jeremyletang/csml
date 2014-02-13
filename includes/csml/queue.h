@@ -26,7 +26,7 @@
 
 #include <stdbool.h>    /* c99 bool */
 #include <stdlib.h>     /* malloc, free */
-#include "csml_memory.h"
+#include "memory.h"
 
 #define queue(type_name) queue_##type_name##_t
 

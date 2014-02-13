@@ -27,7 +27,7 @@
 #include <stdbool.h>    /* c99 bool */
 #include <stdlib.h>     /* malloc, free */
 #include <string.h>     /* memcpy */
-#include "csml_memory.h"
+#include "memory.h"
 
 #define vector(type_name) vector_##type_name##_t
 

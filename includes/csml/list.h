@@ -21,39 +21,9 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdio.h>
-#include "csml/pair.h"
-#include "csml/method_macros.h"
+#ifndef CSML_LIST_H
+#define CSML_LIST_H
 
-/* call the macros with the givens types to implement a stack for this type. */
-impl_pair(int, int, char, char);
+#define list(type_name) list_##type_name##_t
 
-int main() {
-	/* new stack on the heap */
-    pair(int, char) 	*heap_pair =   new(pair(int, char), 10, 'a');
-    /* new stack on the stack */
-    pair(int, char) 	stacked_pair = create(pair(int, char), 20, 'b');
-
-    printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first,
-        heap_pair->second);
-    printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first,
-        stacked_pair.second);
-
-    printf("Now swap them: \n");
-    swap(heap_pair, &stacked_pair);
-    printf("Heap pair = first_item: %d / second_item: %c \n", 
-        heap_pair->first,
-        heap_pair->second);
-    printf("Stacked pair = first_item: %d / second_item: %c \n", 
-        stacked_pair.first,
-        stacked_pair.second);
-
-    /* delete the pair allocated on the heap */
-    delete(heap_pair);
-    /* delete the pair allocated on the stack... */
-    delete(&stacked_pair);
-
-    return 0;
-}
+#endif /* CSML_LIST_H */

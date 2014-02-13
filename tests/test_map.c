@@ -22,8 +22,8 @@
 */
 
 #include <stdio.h>
-#include "csml_map.h"
-#include "csml_method_macro.h"
+#include "csml/map.h"
+#include "csml/method_macros.h"
 
 impl_pair(int, int, char, char);
 impl_map(int, int, char, char);

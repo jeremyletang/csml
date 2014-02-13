@@ -21,18 +21,9 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef CSML_ITERATOR_UTILS_H
-#define CSML_ITERATOR_UTILS_H
+#ifndef CSML_PRIORITY_QUEUE_H
+#define CSML_PRIORITY_QUEUE_H
 
-/* Iterators accesors */
+#define priority_queue(type_name) priority_queue_##type_name##_t
 
-/* Get the value of the iterator */
-#define get(it) &(it)->item
-
-/* compare two iterators */
-#define equals(it1, it2) (it1 == it2)
-
-/* Return the next iterator */
-#define next(it) (it)->next
-
-#endif /* CSML_ITERATOR_UTILS_H */
+#endif /* CSML_PRIORITY_QUEUE_H */

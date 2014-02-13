@@ -27,7 +27,7 @@
 #include <stdbool.h>    /* c99 bool */
 #include <stdlib.h>     /* malloc, free */
 #include <string.h>     /* memcpy */
-#include "csml_memory.h"
+#include "memory.h"
 
 #define pair(type_name1, type_name2) pair_##type_name1##_##type_name2##_t
 

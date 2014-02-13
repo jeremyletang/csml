@@ -22,8 +22,8 @@
 */
 
 #include <stdio.h>
-#include "csml_vector.h"
-#include "csml_method_macro.h"
+#include "csml/vector.h"
+#include "csml/method_macros.h"
 
 /* call the macros with the givens types to implement a vector for this type. */
 impl_vector(int, int);

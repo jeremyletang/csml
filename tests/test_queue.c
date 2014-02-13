@@ -22,7 +22,7 @@
 */
 
 #include <stdio.h>
-#include "csml_queue.h"
+#include "csml/queue.h"
 
 impl_queue(int, int);
 
