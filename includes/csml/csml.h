@@ -32,14 +32,3 @@
 #include "priority_queue.h"
 #include "string.h"
 #include "iterator_utils.h"
-
-// /* Iterators accesors */
-
-// /* Get the value of the iterator */
-// #define get(it) &(it)->item
-
-//  compare two iterators 
-// #define equals(it1, it2) (it1 == it2)
-
-// /* Return the next iterator */
-// #define next(it) (it)->next
