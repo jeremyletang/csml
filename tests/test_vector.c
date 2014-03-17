@@ -35,9 +35,9 @@ void increment_of_ten(int *item, void *data) {
 
 int main() {
 	/* new vector on the heap */
-    vector(int) 	*heap_vector =   new(vector(int), 2);
+    vector_t(int) 	*heap_vector =   new(vector_t(int), 2);
     /* new stack on the stack */
-    vector(int) 	stacked_vector = create(vector(int), 20);
+    vector_t(int) 	stacked_vector = create(vector_t(int), 20);
 
     printf("Heap vector len / capacity: %d / %d\n", 
         len(heap_vector), 

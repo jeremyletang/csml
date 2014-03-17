@@ -26,7 +26,7 @@
 
 #include "memory.h"
 
-#define forward_list(type_name) forward_list_##type_name##_t
+#define flist_t(type_name) forward_list_##type_name##_t
 #define flist_iterator(type_name) forward_list_iterator_##type_name##_t
 
 #define impl_flist(type_name, T)\
@@ -36,67 +36,67 @@ typedef struct flist_iterator(type_name) {\
     struct flist_iterator(type_name)    *next;\
 }flist_iterator(type_name);\
 \
-typedef struct forward_list(type_name) {\
-    T                           *(*front)(struct forward_list(type_name) *self);\
-    void                        (*push_front)(struct forward_list(type_name) *self, T new_item);\
-    void                        (*pop_front)(struct forward_list(type_name) *self);\
-    struct flist_iterator(type_name)    *(*begin)(struct forward_list(type_name) *self);\
-    struct flist_iterator(type_name)    *(*end)(struct forward_list(type_name) *self);\
-    bool                        (*is_empty)(struct forward_list(type_name) *self);\
-    struct flist_iterator(type_name)    *(*insert_after)(struct forward_list(type_name) *self, \
+typedef struct flist_t(type_name) {\
+    T                           *(*front)(struct flist_t(type_name) *self);\
+    void                        (*push_front)(struct flist_t(type_name) *self, T new_item);\
+    void                        (*pop_front)(struct flist_t(type_name) *self);\
+    struct flist_iterator(type_name)    *(*begin)(struct flist_t(type_name) *self);\
+    struct flist_iterator(type_name)    *(*end)(struct flist_t(type_name) *self);\
+    bool                        (*is_empty)(struct flist_t(type_name) *self);\
+    struct flist_iterator(type_name)    *(*insert_after)(struct flist_t(type_name) *self, \
         struct flist_iterator(type_name) *it, T new_item);\
-    struct flist_iterator(type_name)    *(*erase_after)(struct forward_list(type_name) *self, \
+    struct flist_iterator(type_name)    *(*erase_after)(struct flist_t(type_name) *self, \
         struct flist_iterator(type_name) *it);\
-    struct flist_iterator(type_name)    *(*erase_in)(struct forward_list(type_name) *self, \
+    struct flist_iterator(type_name)    *(*erase_in)(struct flist_t(type_name) *self, \
         struct flist_iterator(type_name) *begin, \
         struct flist_iterator(type_name) *end);\
-    void                        (*remove)(struct forward_list(type_name) *self, T rm_item);\
-    void                        (*remove_if)(struct forward_list(type_name) *self, bool (*predicate)(T *item));\
-    bool                        (*free)(struct forward_list(type_name) *self);\
-    unsigned int                (*len)(struct forward_list(type_name) *self);\
+    void                        (*remove)(struct flist_t(type_name) *self, T rm_item);\
+    void                        (*remove_if)(struct flist_t(type_name) *self, bool (*predicate)(T *item));\
+    bool                        (*free)(struct flist_t(type_name) *self);\
+    unsigned int                (*len)(struct flist_t(type_name) *self);\
     \
     struct flist_iterator(type_name)    *first;\
     struct flist_iterator(type_name)    *last;\
     unsigned int                        size;\
-} forward_list(type_name);\
+} flist_t(type_name);\
 \
-void            forward_list_##type_name##_t_initialize(struct forward_list(type_name) *self, bool type);\
-bool            forward_list_##type_name##_t_delete_heap(struct forward_list(type_name) *self);\
-bool            forward_list_##type_name##_t_delete_stacked(struct forward_list(type_name) *self);\
-void            forward_list_##type_name##_t_delete_in(struct forward_list(type_name) *self);\
+void            forward_list_##type_name##_t_initialize(struct flist_t(type_name) *self, bool type);\
+bool            forward_list_##type_name##_t_delete_heap(struct flist_t(type_name) *self);\
+bool            forward_list_##type_name##_t_delete_stacked(struct flist_t(type_name) *self);\
+void            forward_list_##type_name##_t_delete_in(struct flist_t(type_name) *self);\
 \
-T                           *forward_list_##type_name##_t_front(struct forward_list(type_name) *self);\
-void                        forward_list_##type_name##_t_push_front(struct forward_list(type_name) *self, T new_item);\
-void                        forward_list_##type_name##_t_pop_front(struct forward_list(type_name) *self);\
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_begin(struct forward_list(type_name) *self);\
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_end(struct forward_list(type_name) *self);\
-bool                        forward_list_##type_name##_t_is_empty(struct forward_list(type_name) *self);\
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_insert_after(struct forward_list(type_name) *self, \
+T                           *forward_list_##type_name##_t_front(struct flist_t(type_name) *self);\
+void                        forward_list_##type_name##_t_push_front(struct flist_t(type_name) *self, T new_item);\
+void                        forward_list_##type_name##_t_pop_front(struct flist_t(type_name) *self);\
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_begin(struct flist_t(type_name) *self);\
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_end(struct flist_t(type_name) *self);\
+bool                        forward_list_##type_name##_t_is_empty(struct flist_t(type_name) *self);\
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_insert_after(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it, T new_item);\
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_after(struct forward_list(type_name) *self, \
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_after(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it);\
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_in(struct forward_list(type_name) *self, \
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_in(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it1, flist_iterator(type_name) *it2);\
-void                        forward_list_##type_name##_t_remove(struct forward_list(type_name) *self, T rm_item);\
-void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, \
+void                        forward_list_##type_name##_t_remove(struct flist_t(type_name) *self, T rm_item);\
+void                        forward_list_##type_name##_t_remove_if(struct flist_t(type_name) *self, \
     bool (*predicate)(T *item));\
-unsigned int                forward_list_##type_name##_t_len(struct forward_list(type_name) *self);\
+unsigned int                forward_list_##type_name##_t_len(struct flist_t(type_name) *self);\
 \
-forward_list(type_name) *new_forward_list_##type_name##_t() {\
-    forward_list(type_name) *self = malloc(sizeof(forward_list(type_name)));\
+flist_t(type_name) *new_forward_list_##type_name##_t() {\
+    flist_t(type_name) *self = malloc(sizeof(flist_t(type_name)));\
     if (self) {\
         forward_list_##type_name##_t_initialize(self, true);\
     }\
     return self;\
 }\
 \
-forward_list(type_name) stacked_forward_list_##type_name##_t() {\
-    forward_list(type_name) self;\
+flist_t(type_name) stacked_forward_list_##type_name##_t() {\
+    flist_t(type_name) self;\
     forward_list_##type_name##_t_initialize(&self, false);\
     return self;\
 }\
 \
-void forward_list_##type_name##_t_initialize(struct forward_list(type_name) *self, bool type) {\
+void forward_list_##type_name##_t_initialize(struct flist_t(type_name) *self, bool type) {\
     self->size = 0;\
     self->first = 0;\
     self->last = 0;\
@@ -119,17 +119,17 @@ void forward_list_##type_name##_t_initialize(struct forward_list(type_name) *sel
     }\
 }\
 \
-bool            forward_list_##type_name##_t_delete_heap(struct forward_list(type_name) *self) {\
+bool            forward_list_##type_name##_t_delete_heap(struct flist_t(type_name) *self) {\
     forward_list_##type_name##_t_delete_in(self);\
     return true;\
 }\
 \
-bool            forward_list_##type_name##_t_delete_stacked(struct forward_list(type_name) *self) {\
+bool            forward_list_##type_name##_t_delete_stacked(struct flist_t(type_name) *self) {\
     forward_list_##type_name##_t_delete_in(self);\
     return false;\
 }\
 \
-void            forward_list_##type_name##_t_delete_in(struct forward_list(type_name) *self) {\
+void            forward_list_##type_name##_t_delete_in(struct flist_t(type_name) *self) {\
     flist_iterator(type_name) *tmp;\
     while(self->first) {\
         tmp = self->first->next;\
@@ -138,7 +138,7 @@ void            forward_list_##type_name##_t_delete_in(struct forward_list(type_
     }\
 }\
 \
-T                           *forward_list_##type_name##_t_front(struct forward_list(type_name) *self) {\
+T                           *forward_list_##type_name##_t_front(struct flist_t(type_name) *self) {\
     T *return_value = 0;\
     if (self->first) {\
         return_value = &self->first->item;\
@@ -146,7 +146,7 @@ T                           *forward_list_##type_name##_t_front(struct forward_l
     return return_value;\
 }\
 \
-void                        forward_list_##type_name##_t_push_front(struct forward_list(type_name) *self, T new_item) {\
+void                        forward_list_##type_name##_t_push_front(struct flist_t(type_name) *self, T new_item) {\
     flist_iterator(type_name) *tmp = malloc(sizeof(flist_iterator(type_name)));\
     if (tmp) {\
         tmp->item = new_item;\
@@ -160,7 +160,7 @@ void                        forward_list_##type_name##_t_push_front(struct forwa
     }\
 }\
 \
-void                        forward_list_##type_name##_t_pop_front(struct forward_list(type_name) *self) {\
+void                        forward_list_##type_name##_t_pop_front(struct flist_t(type_name) *self) {\
     flist_iterator(type_name) *tmp = self->first;\
     if (self->first) {\
         self->first = self->first->next;\
@@ -168,43 +168,43 @@ void                        forward_list_##type_name##_t_pop_front(struct forwar
     }\
 }\
 \
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_begin(struct forward_list(type_name) *self) {\
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_begin(struct flist_t(type_name) *self) {\
     return self->first;\
 }\
 \
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_end(struct forward_list(type_name) *self) {\
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_end(struct flist_t(type_name) *self) {\
     return 0;\
 }\
 \
-bool                        forward_list_##type_name##_t_is_empty(struct forward_list(type_name) *self) {\
+bool                        forward_list_##type_name##_t_is_empty(struct flist_t(type_name) *self) {\
     return self->size == 0;\
 }\
 \
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_insert_after(struct forward_list(type_name) *self, \
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_insert_after(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it, T new_item) {\
     \
 }\
 \
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_after(struct forward_list(type_name) *self, \
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_after(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it) {\
     \
 }\
 \
-struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_in(struct forward_list(type_name) *self, \
+struct flist_iterator(type_name)    *forward_list_##type_name##_t_erase_in(struct flist_t(type_name) *self, \
     struct flist_iterator(type_name) *it1, flist_iterator(type_name) *it2) {\
     \
 }\
 \
-void                        forward_list_##type_name##_t_remove(struct forward_list(type_name) *self, T rm_item) {\
+void                        forward_list_##type_name##_t_remove(struct flist_t(type_name) *self, T rm_item) {\
     \
 }\
 \
-void                        forward_list_##type_name##_t_remove_if(struct forward_list(type_name) *self, \
+void                        forward_list_##type_name##_t_remove_if(struct flist_t(type_name) *self, \
     bool (*predicate)(T *item)) {\
     \
 }\
 \
-unsigned int                forward_list_##type_name##_t_len(struct forward_list(type_name) *self) {\
+unsigned int                forward_list_##type_name##_t_len(struct flist_t(type_name) *self) {\
     return self->size;\
 }\
 

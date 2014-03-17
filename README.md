@@ -5,28 +5,29 @@ Like C++ STL but with macros and C
 
 # Example
 ```C
-// call the macros with the givens types to implement a stack for this type.
-impl_stack(int, int);
+/* import csml stuff */
+#include "csml/csml.h"
+/* include functions shortcuts macros */
+#include "csml/method_macros.h"
+/* call the macros with the givens types to implement a stack for this type */
+impl_flist(int, int);
 
 int main() {
-	// new stack on the heap
-    Stack(int) 	*heap_stack = new(Stack(int));
-    // new stack on the stack
-    Stack(int) 	stacked_stack = create(Stack(int));
+	/* new forward list on the heap */
+    flist_t(int) 	*list = new(flist_t(int));
 
-    // use heap stack
-    printf("Heap Stack size: %d\n", heap_stack->len(heap_stack));
-    heap_stack->push(heap_stack, 10);
-    printf("Heap Stack size after a push: %d\n", heap_stack->len(heap_stack));
+    /* push some elements in the list */
+    push_front(list, 42);
+    push_front(list, 84);
+    push_front(list, 21);
+	
+	/* iterate over the list */
+	flist_iterator(int) *it = begin(list);
+	for (;!equals(it, end(list)); inc(it)) {
+    	printf("List item: %d\n", *get(it));
+	}
 
-    // use stacked stack
-    printf("Stacked Stack size: %d\n", stacked_stack.len(&stacked_stack));
-    stacked_stack.push(&stacked_stack, 10);
-    printf("Stacked Stack size after a push: %d\n", stacked_stack.len(&stacked_stack));
-
-    // delete the stack allocated on the heap
-    delete(heap_stack);
-    // delete the stack allocated on the stack...
-    delete(&stacked_stack);
+    // delete the list
+    delete(list);
 }
 ```

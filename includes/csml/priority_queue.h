@@ -24,6 +24,6 @@
 #ifndef CSML_PRIORITY_QUEUE_H
 #define CSML_PRIORITY_QUEUE_H
 
-#define priority_queue(type_name) priority_queue_##type_name##_t
+#define priority_queue_t(type_name) priority_queue_##type_name##_t
 
 #endif /* CSML_PRIORITY_QUEUE_H */

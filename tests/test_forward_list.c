@@ -29,8 +29,8 @@ impl_flist(int, int);
 impl_flist(charptr, char*);
 
 int main() {
-    forward_list(int) 	     *heap_list =   new(forward_list(int));
-    forward_list(charptr) 	 stacked_list = create(forward_list(charptr));
+    flist_t(int) 	     *heap_list =   new(flist_t(int));
+    flist_t(charptr) 	 stacked_list = create(flist_t(charptr));
 
     push_front(heap_list, 42);
     push_front(heap_list, 84);

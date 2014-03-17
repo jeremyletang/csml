@@ -33,8 +33,8 @@ bool cmp_key(int i, int j) {
 }
 
 int main() {
-    map(int, char)     *heap_map =   new(map(int, char), cmp_key);
-    map(int, char)     stacked_map = create(map(int, char), cmp_key);
+    map_t(int, char)     *heap_map =   new(map_t(int, char), cmp_key);
+    map_t(int, char)     stacked_map = create(map_t(int, char), cmp_key);
 
     insert(heap_map, 1, 'b');
     insert(heap_map, 2, 'c');

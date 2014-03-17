@@ -27,8 +27,8 @@
 impl_queue(int, int);
 
 int main() {
-    queue(int) 	*heap_queue =   new(queue(int));
-    queue(int) 	stacked_queue = create(queue(int));
+    queue_t(int) 	*heap_queue =   new(queue_t(int));
+    queue_t(int) 	stacked_queue = create(queue_t(int));
 
     delete(heap_queue);
     delete(&stacked_queue);

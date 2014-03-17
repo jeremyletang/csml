@@ -24,6 +24,6 @@
 #ifndef CSML_LIST_H
 #define CSML_LIST_H
 
-#define list(type_name) list_##type_name##_t
+#define list_t(type_name) list_##type_name##_t
 
 #endif /* CSML_LIST_H */
